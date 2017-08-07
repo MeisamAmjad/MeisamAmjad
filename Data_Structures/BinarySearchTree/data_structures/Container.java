@@ -56,7 +56,7 @@ public abstract class Container<K extends Comparable<K>> {
 	 * @param query element_type being seqrched for
 	 * @return boolean
 	 */
-	public abstract boolean contains(K query);
+	public abstract boolean contains( K query );
 	
 	/**
 	 * <p> Endorse whether or not the object is validated. Returns true if it would be positive, otherwise returns false.</p>
@@ -67,6 +67,11 @@ public abstract class Container<K extends Comparable<K>> {
 	 * @return
 	 */
 	public abstract boolean validate( Object o );
+	
+	/**
+	 * <p>Checks if all elements in dictionary follow the rules based on the implementation of the data structure.</p>ß
+	 */
+	public abstract boolean validate( );
 	
 	/**
 	 * @see #n
