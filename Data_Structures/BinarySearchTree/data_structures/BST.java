@@ -392,10 +392,13 @@ public class BST<K extends Comparable<K>,V extends Comparable<V>> extends Dictio
 	 * @see #deepCopy(PairNode)
 	 */
 	@Override
-	protected Object clone() throws CloneNotSupportedException {
+	public Object clone() throws CloneNotSupportedException {
 		if ( isEmpty() )
 			throw new CloneNotSupportedException( "** The object is EMPTY, meaning cannot be clone right now. **" );
-		return deepCopy( getRoot() );
+		BST<K, V> newBST = new BST<>();
+		newBST.setRoot( deepCopy( getRoot() ) );
+		newBST.setN( size() );
+		return newBST;
 	}
 	
 	/*
