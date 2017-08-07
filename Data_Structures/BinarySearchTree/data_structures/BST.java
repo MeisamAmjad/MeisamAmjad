@@ -415,11 +415,20 @@ public class BST<K extends Comparable<K>,V extends Comparable<V>> extends Dictio
 				if ( !obj.isEmpty() )
 					return true;
 			} else if ( o instanceof BST ){
-				return isBST( getRoot() );
+				return isBST( ( ( BST<K, V> ) o ).getRoot() );
 			}else
 				return true;
 		}
 		return false; 
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see data_structures.Dictionary#validate()
+	 */
+	@Override
+	public boolean validate() {
+		return isBST( getRoot() );
 	}
 	
 	/**
@@ -482,7 +491,7 @@ public class BST<K extends Comparable<K>,V extends Comparable<V>> extends Dictio
 	 * @see #findNode(key)
 	 */
 	protected boolean addChild( PairNode<K, V> lastFindedNode, PairNode<K,V> newNode ) {
-		if ( validate( lastFindedNode ) ) 
+		if ( !validate( lastFindedNode ) ) 
 			setRoot( newNode );// Inserting into an empty tree
 		else {
 			int comp = newNode.getKey().compareTo( lastFindedNode.getKey() );
@@ -491,8 +500,9 @@ public class BST<K extends Comparable<K>,V extends Comparable<V>> extends Dictio
 		    else if ( comp > 0 ) 
 		    	lastFindedNode.setRight( newNode );
 		    else 
-		    	return false;
+		    		return false;
 		}
+		newNode.setParent( lastFindedNode );
 		return true;
 	}
 	
@@ -529,7 +539,7 @@ public class BST<K extends Comparable<K>,V extends Comparable<V>> extends Dictio
 	 */
 	protected boolean remove ( PairNode<K, V> u ) {
 		PairNode<K, V> removingNode = findNode( u.getKey() );
-		if ( removingNode.getKey().equals( u.getKey() ) )
+		if ( removingNode.getKey().compareTo( u.getKey() ) == 0 )
 				if ( removeChild( removingNode ) ) {
 					decreaseSize();
 					return false;
@@ -655,7 +665,7 @@ public class BST<K extends Comparable<K>,V extends Comparable<V>> extends Dictio
 		StringBuilder builder = new StringBuilder();
         if ( r.getParent() != null ) {
             String side = "left";
-            if ( r.getKey().equals( r.getParent().getRight().getKey() ) )
+            if ( r.getKey().compareTo( r.getParent().getRight().getKey() ) == 0 )
                 side = "right";
             builder.append( prefixMessage + ( isTail ? "└── " : "├── " ) + "(" + side + ") " + r.toString() + "\n" );
         }else
