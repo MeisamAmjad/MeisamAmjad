@@ -29,7 +29,7 @@ import java.util.List;
  * @param <K>
  * @param <V>
  */
-public class MinHeap<K extends Comparable<K>, V extends Comparable<V>> implements Iterable<PairNode<K, V>>, BinaryHeap<K, V>{
+public class MinHeap<K extends Comparable<K>, V extends Comparable<V>> implements Iterable<PairNode<K, V>>, BinaryHeap<K, V>, MinPriorityQueue<K , V>{
 	/**
 	 * <p> Holds all pairs in which each pair holding key (priority) and value (entity).</p> 
 	 * @see #getHeap()
