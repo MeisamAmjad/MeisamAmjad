@@ -90,26 +90,7 @@ public class Main {
 		sS.build( slocs );
 		long endb = System.nanoTime();
 		System.out.println( "Building the data structure took: " + ( endb-startb ) / 1000000.0 + " milliseconds (time not very accurate)" );
-		/*
-		 * Quick accuracy test for some known values - Only use if your code is supposed to be perfectly accurate!
-         */
-		StoresLocation s = sS.getNearest( -76.16304, 39.5106 );
-		if( !s.address.equals( "Maryland House Travel Plaza" ) ) {
-			System.out.println( "Failed Maryland House Travel Plaza test. Got: " + s.address );
-			System.exit( 0 );
-		}
-   		s = sS.getNearest( -104.8287, 39.70294 );
-		if( !s.address.equals( "I-225 - Alameda-Aurora" ) ) {
-			System.out.println( "Failed I-225 - Alameda-Aurora test. Got: " + s.address );
-			System.exit( 0 );
-		}
-		/* 
-		 * TEST FOR SPEED
-		 * Do many searches, and compute the average time per search. -- This should take between
-		 * 5 and 50 seconds.
-		 * Brute force: 0.162 ms per search, 1.08 ms build, 0.0 error rate
-		 * My solution: 0.026 ms per search, 39.3 ms build, 0.0 error rate
-		 */
+		
 		long start = 0;
 		long end = 0;
 		int numTrials = 1000;
