@@ -55,7 +55,7 @@ public class MaxHeap<K extends Comparable<K>, V extends Comparable<V>> implement
 	/**
 	 * <p>Constructor.</p>
 	 */
-	protected MaxHeap( MinHeap<K, V> newMBH ) {
+	protected MaxHeap( MaxHeap<K, V> newMBH ) {
 		setHeap( newMBH.getHeap() );
 	}
 	
