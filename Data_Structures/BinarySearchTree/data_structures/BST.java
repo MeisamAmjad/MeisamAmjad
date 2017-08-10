@@ -343,7 +343,7 @@ public class BST<K extends Comparable<K>,V extends Comparable<V>> extends Dictio
 	public String toString() {
 		return ( isEmpty() )
 				? "null"
-				: printTree( getRoot(), "", true );
+				: printTree( getRoot(), 0, "" );
 	}
 
 	/**
@@ -653,41 +653,25 @@ public class BST<K extends Comparable<K>,V extends Comparable<V>> extends Dictio
 	}
 	
 	/**
-	 * <p> This method starts from the given r node (which by default would be the root), builds a String starting with prefixMessage </br>
-	 * (which by default would be a white space) and containing all details of left and right subtrees in which all points are saved.</br>
+	 * <p> This method starts from the given r node and builds a string containing tree .</br>
 	 * <b>This method is used by toString() method.</b><p> 
-	 * @param r A starting node.
-	 * @param prefixMessage A message that would be shown at the beginning of the each node.
-	 * @param isTail A helper for determining if the current node would be the leaf.
 	 * @return <b> String</br> The whole tree</b> holding all points.
 	 * @see java.lang.StringBuilder
 	 * @see java.lang.String
 	 * @see #toString()
 	 */
-	protected String printTree( PairNode<K, V> r, String prefixMessage, boolean isTail ) {
+	protected String printTree( PairNode<K,V> root, int indent, String s ) {
 		StringBuilder builder = new StringBuilder();
-        if ( r.getParent() != null ) {
-            String side = "left";
-            if ( r.getKey().compareTo( r.getParent().getRight().getKey() ) == 0 )
-                side = "right";
-            builder.append( prefixMessage + ( isTail ? "└── " : "├── " ) + "(" + side + ") " + r.toString() + "\n" );
-        }else
-            builder.append( prefixMessage + ( isTail ? "└── " : "├── " ) + r.toString() + "\n" );
-        List<PairNode<K, V>> children = null;
-        if ( r.getLeft() != null || r.getRight() != null ) {
-            children = new ArrayList<PairNode<K, V>>(2);
-            if ( r.getLeft() != null )
-                children.add( r.getLeft() );
-            if ( r.getRight() != null )
-                children.add( r.getRight() );
-        }
-        if ( children != null ) {
-            for ( int i = 0; i < children.size() - 1; i ++ )
-                builder.append( printTree( children.get(i), prefixMessage + ( isTail ? "    " : "│   " ), false ) );
-            if (children.size() >= 1)
-                builder.append( printTree( children.get( children.size() - 1 ), prefixMessage + ( isTail ? "    " : "│   " ), true ) );
-        }
-        return builder.toString();
+		for ( int i = 0; i < indent; i ++ )
+			builder.append( "\t" );
+		if ( root == null ) {
+			builder.append( "LEAF" + "\n" );
+			return builder.toString();
+		}
+		builder.append( s + "->" + root.getKey() + ": " + root.getValue() + "\n" );
+		builder.append( printTree( root.getLeft(), indent + 1, "left" ) );
+		builder.append( printTree( root.getRight(), indent + 1, "right" ) );
+		return builder.toString();
     }
 
 	/**
