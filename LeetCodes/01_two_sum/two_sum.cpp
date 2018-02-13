@@ -12,8 +12,11 @@
  * 
  * 
  * File:   two_sum.cpp
+ * 
  * Author: Meisam Amjad amjadm@miamioh.edu
- *
+ * 
+ * Time in leetCode = 8 ms
+ * Rank in leetCode = beats 76.26% in that runtime range.
  */
 
 #include <iostream>
