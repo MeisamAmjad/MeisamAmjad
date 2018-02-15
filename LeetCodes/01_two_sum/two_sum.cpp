@@ -27,9 +27,9 @@ class Two_sum {
 public:
     std::vector<int> twoSum(std::vector<int>& nums, const int& target) {
         std::unordered_map<int, size_t> tempList;
-        auto temp = tempList.end();
+        auto temp = tempList.end(), end = tempList.end();
         for (size_t i = 0; i < nums.size(); tempList.insert({nums[i], i++}))
-            if ((temp = tempList.find(target - nums[i])) != tempList.end())
+            if ((temp = tempList.find(target - nums[i])) != end)
                 return {temp->second, i};
         return {};
     }
