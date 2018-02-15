@@ -18,21 +18,33 @@
  * 
  * Author: Meisam Amjad amjadm@miamioh.edu
  * 
- * Time in leetCode =  ms
- * Rank in leetCode = beats % in that runtime range.
+ * Time in leetCode = 231 ms
+ * Rank in leetCode = beats 18.66% in that runtime range.
  */
+#include <assert.h>
 
-#include <cstdlib>
-
-class Solution {
+class Palindrome {
 public:
     bool isPalindrome(int x) {
-        
+        if ((x < 0 || (x % 10 == 0 && x != 0))) return 0;
+        int reverseX = 0;
+        while (x > reverseX) {
+            reverseX = reverseX * 10 + x % 10;
+            x /= 10;
+        }
+        return ((x == reverseX) || (x == reverseX / 10))? 1: 0;
     }
 };
 
 int main(int argc, char** argv) {
-
+    Palindrome test;
+    assert(test.isPalindrome(1221));
+    assert(test.isPalindrome(120021));
+    assert(!test.isPalindrome(-1));
+    assert(!test.isPalindrome(10));
+    assert(!test.isPalindrome(100));
+    assert(test.isPalindrome(1));
+    assert(test.isPalindrome(0));
     return 0;
 }
 
