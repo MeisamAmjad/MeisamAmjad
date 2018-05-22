@@ -11,12 +11,19 @@
  * Author: Meisam Amjad amjadm@miamioh.edu
  * 
  * Time in leetCode =  73 ms
- * Rank in leetCode = beats 61.34% in that runtime range.
+ * Rank in leetCode = beats 85.20% in that runtime range.
  */
 
 #include <assert.h>
+#include <iostream>
 #include <string>
 #include <unordered_map>
+
+static std::string s=[]() {
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(NULL);
+    return "";
+} ();
 
 class RomanToInteger {    
 public:
@@ -26,7 +33,7 @@ public:
                                                     {'C', 100}, {'D', 500}, 
                                                     {'M', 1000}};
         int prevNum = 0,  currentNum, result = 0;
-        for (int i = s.size(); i >= 0; --i) {
+        for (int i = s.size() - 1; i >= 0; --i) {
             currentNum = romanSigns[s[i]];
             if (currentNum < prevNum)
                 result -= currentNum;
