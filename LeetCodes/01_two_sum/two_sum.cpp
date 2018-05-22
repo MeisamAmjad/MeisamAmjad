@@ -19,14 +19,18 @@
  * Rank in leetCode = beats 76.26% in that runtime range.
  */
 
+#include <assert.h>
 #include <iostream>
 #include <vector>
 #include <unordered_map>
 
+using intVec = std::vector<int>;
+using map    = std::unordered_map<int, size_t>;
+
 class Two_sum {
 public:
-    std::vector<int> twoSum(std::vector<int>& nums, const int& target) {
-        std::unordered_map<int, size_t> tempList;
+    intVec twoSum(intVec& nums, const int& target) {
+        map tempList;
         auto temp = tempList.end(), end = tempList.end();
         for (size_t i = 0; i < nums.size(); tempList.insert({nums[i], i++}))
             if ((temp = tempList.find(target - nums[i])) != end)
@@ -36,13 +40,9 @@ public:
 };
 
 int main(int argc, char** argv) {
-    std::vector<int> nums = {2, 7, 11, 15, 6, 0, -1, 20, 30};
-    const int target = 1;
+    intVec nums = {2, 7, 11, 15, 6, 0, -1, 20, 30};
     Two_sum test;
-    std::vector<int> result;
-    result = test.twoSum(nums, target);
-    for (auto element : result)
-        std::cout << element << " ";
+    assert(test.twoSum(nums, 1)[0] == 0 && test.twoSum(nums, 1)[1] == 6);
     return 0;
 }
 
