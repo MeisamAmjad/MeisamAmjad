@@ -10,8 +10,8 @@
  * 
  * Author: Meisam Amjad amjadm@miamioh.edu
  * 
- * Time in leetCode =  73 ms
- * Rank in leetCode = beats 85.20% in that runtime range.
+ * Time in leetCode =  62 ms
+ * Rank in leetCode = beats 97.41% in that runtime range.
  */
 
 #include <assert.h>
@@ -24,6 +24,12 @@ static std::string s=[]() {
     std::cin.tie(NULL);
     return "";
 } ();
+
+static auto romanSigns= []() {
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(NULL);
+    return 0;
+}();
 
 class RomanToInteger {    
 public:

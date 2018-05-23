@@ -18,10 +18,23 @@
  * 
  * Author: Meisam Amjad amjadm@miamioh.edu
  * 
- * Time in leetCode = 231 ms
- * Rank in leetCode = beats 18.66% in that runtime range.
+ * Time in leetCode = 140 ms
+ * Rank in leetCode = beats 98.61% in that runtime range.
  */
 #include <assert.h>
+#include <iostream>
+
+static int x = []() { 
+    std::ios::sync_with_stdio(false); 
+    std::cin.tie(NULL);  
+    return 0; 
+}();
+
+static int reverseX = []() { 
+    std::ios::sync_with_stdio(false); 
+    std::cin.tie(NULL);  
+    return 0; 
+}();
 
 class Palindrome {
 public:

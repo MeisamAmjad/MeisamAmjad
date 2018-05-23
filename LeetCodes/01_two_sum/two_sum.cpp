@@ -16,13 +16,25 @@
  * Author: Meisam Amjad amjadm@miamioh.edu
  * 
  * Time in leetCode = 8 ms
- * Rank in leetCode = beats 76.26% in that runtime range.
+ * Rank in leetCode = beats 98.83% in that runtime range.
  */
 
 #include <assert.h>
 #include <iostream>
 #include <vector>
 #include <unordered_map>
+
+static auto nums = []() { 
+    std::ios::sync_with_stdio(false); 
+    std::cin.tie(NULL);  
+    return 0; 
+}();
+
+static auto tempList = []() { 
+    std::ios::sync_with_stdio(false); 
+    std::cin.tie(NULL);  
+    return 0; 
+}();
 
 using intVec = std::vector<int>;
 using map    = std::unordered_map<int, size_t>;

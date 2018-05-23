@@ -20,8 +20,8 @@
  * 
  * Author: Meisam Amjad amjadm@miamioh.edu
  * 
- * Time in leetCode =  19 ms
- * Rank in leetCode = beats 99.17% in that runtime range.
+ * Time in leetCode =  14 ms
+ * Rank in leetCode = beats 96.67% in that runtime range.
  */
 
 #include <iostream>
@@ -32,7 +32,7 @@ static int x = []() {
     return 0; 
 }();
 
-static int result = []() { 
+static long result = []() { 
     std::ios::sync_with_stdio(false); 
     std::cin.tie(NULL);  
     return 0; 
