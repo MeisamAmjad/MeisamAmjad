@@ -34,8 +34,8 @@
  * 
  * Author: Meisam Amjad amjadm@miamioh.edu
  * 
- * Time in leetCode = 4 ms
- * Rank in leetCode = beats 100% in that runtime range.
+ * Time in leetCode = 3 ms
+ * Rank in leetCode = beats 99.53% in that runtime range.
  */
 
 #include <assert.h>
@@ -55,7 +55,7 @@ static auto tempStack = []() {
     return "";
 }();
 
-static int ___ = []() {
+static size_t ___ = []() {
     std::ios::sync_with_stdio(false);
     std::cin.tie(0);
     return 0;
@@ -64,28 +64,38 @@ static int ___ = []() {
 class Solution {
 public:
     bool isValid(std::string s) {
-        if (s.empty() || s.size() == 1) return false;
+        if (s.size() == 1) return false;
         std::stack<char> tempStack;
-        for (int i = 0; i < s.size(); ++i)
-            switch(s[i]) {
+        for (size_t i = 0; i < s.size(); ++i)
+            switch (s[i]) {
                 case '(':
                 case '{':
                 case '[':
                     tempStack.push(s[i]);
                     break;
                 case ')':
-                    if (tempStack.top() == '(') tempStack.pop();
-                    else return false;
+                    if (!tempStack.empty() && tempStack.top() == '(')
+                        tempStack.pop();
+                    else
+                        return false;
                     break;
                 case '}':
-                    if (tempStack.top() == '{') tempStack.pop();
-                    else return false;
+                    if (!tempStack.empty() && tempStack.top() == '{')
+                        tempStack.pop();
+                    else
+                        return false;
+                    break;
                 case ']':
-                    if (tempStack.top() == ']') tempStack.pop();
-                    else return false;
+                    if (!tempStack.empty() && tempStack.top() == '[')
+                        tempStack.pop();
+                    else
+                        return false;
+                    break;
+                case ' ': break;
                 default:
                     return false;
             }
+        return tempStack.empty();
     }
 };
 
@@ -98,8 +108,8 @@ int main(int argc, char* argv[]) {
     Solution s;
     assert(s.isValid(sample1));
     assert(s.isValid(sample2));
-    assert(s.isValid(sample3));
-    assert(s.isValid(sample4));
+    assert(!s.isValid(sample3));
+    assert(!s.isValid(sample4));
     assert(s.isValid(sample5));
     return 0;
 }
