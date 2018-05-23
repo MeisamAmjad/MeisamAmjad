@@ -21,10 +21,22 @@
  * Author: Meisam Amjad amjadm@miamioh.edu
  * 
  * Time in leetCode =  19 ms
- * Rank in leetCode = beats 45.67% in that runtime range.
+ * Rank in leetCode = beats 99.17% in that runtime range.
  */
 
 #include <iostream>
+
+static int x = []() { 
+    std::ios::sync_with_stdio(false); 
+    std::cin.tie(NULL);  
+    return 0; 
+}();
+
+static int result = []() { 
+    std::ios::sync_with_stdio(false); 
+    std::cin.tie(NULL);  
+    return 0; 
+}();
 
 class Reverse_Integer {
 public:
@@ -38,7 +50,7 @@ public:
     }
 };
 
-int main(int argc, char** argv) {
+int main(int argc, char* argv[]) {
     Reverse_Integer test;
     std::cout << test.reverse(-123) << std::endl;
     std::cout << test.reverse(120) << std::endl;
