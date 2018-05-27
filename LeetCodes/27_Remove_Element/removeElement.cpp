@@ -43,8 +43,8 @@
  * 
  * Author: Meisam Amjad amjadm@miamioh.edu
  * 
- * Time in leetCode =  ms
- * Rank in leetCode = beats % in that runtime range.
+ * Time in leetCode = 4 ms
+ * Rank in leetCode = beats 100% in that runtime range.
  */ 
 
 
@@ -63,19 +63,19 @@ class Solution {
 public:
     int removeElement(std::vector<int>& nums, int val) {
         size_t h = 0;
-        for (size_t t = 1; t < nums.size(); ++t)
-            if (nums[h] != nums[t])
-                    nums[h] = nums[t];
-        return h + 1;
+        for (size_t t = 0; t < nums.size(); ++t)
+            if (nums[t] != val)
+                nums[h++] = nums[t];
+        return h;
     }
 };
 
 int main(int argc, char** argv) {
     std::vector<int> sample1 = {3, 2, 2, 3};
-    std::vector<int> sample2 = [0, 1, 2, 2, 3, 0, 4, 2];
+    std::vector<int> sample2 = {0, 1, 2, 2, 3, 0, 4, 2};
     Solution test;
 
-    assert(test.removeDuplicates(sample1, 3) == 2);
-    assert(test.removeDuplicates(sample2, 2) == 5);
+    assert(test.removeElement(sample1, 3) == 2);
+    assert(test.removeElement(sample2, 2) == 5);
     return 0;
 }
