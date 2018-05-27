@@ -57,6 +57,7 @@ static auto ___ = []() {
 class Solution {
 public:
     int removeDuplicates(std::vector<int>& nums) {
+        if (nums.empty()) return 0;
         size_t h = 0;
         for (size_t t = 1; t < nums.size(); ++t)
             if (nums[h] != nums[t])
