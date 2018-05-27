@@ -61,7 +61,7 @@ public:
         size_t h = 0;
         for (size_t t = 1; t < nums.size(); ++t)
             if (nums[h] != nums[t])
-                    nums[h] = nums[t];
+                    nums[++h] = nums[t];
         return h + 1;
     }
 };
