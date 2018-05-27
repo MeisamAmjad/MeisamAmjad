@@ -39,21 +39,39 @@
  * 
  * Author: Meisam Amjad amjadm@miamioh.edu
  * 
- * Time in leetCode =  ms
- * Rank in leetCode = beats % in that runtime range.
+ * Time in leetCode = 21 ms
+ * Rank in leetCode = beats 100% in that runtime range.
  */ 
 
+#include <assert.h>
 #include <iostream>
 #include <vector>
+#include <algorithm>
+
+static auto ___ = []() {
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(NULL);
+    return 0;
+}();
 
 class Solution {
 public:
     int removeDuplicates(std::vector<int>& nums) {
-        return 0;
+        size_t h = 0;
+        for (size_t t = 1; t < nums.size(); ++t)
+            if (nums[h] != nums[t])
+                    nums[h] = nums[t];
+        return h + 1;
     }
 };
 
 int main(int argc, char** argv) {
+    std::vector<int> sample1 = {1, 1, 2};
+    std::vector<int> sample2 = {0, 0, 1, 1, 1, 2, 2, 3, 3, 4};
+    Solution test;
+
+    assert(test.removeDuplicates(sample1) == 2);
+    assert(test.removeDuplicates(sample2) == 5);
     return 0;
 }
 
