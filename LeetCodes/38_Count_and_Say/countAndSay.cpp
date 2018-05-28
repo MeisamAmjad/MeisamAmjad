@@ -32,8 +32,8 @@
  * 
  * Author: Meisam Amjad amjadm@miamioh.edu
  * 
- * Time in leetCode =  ms
- * Rank in leetCode = beats % in that runtime range.
+ * Time in leetCode = 2 ms
+ * Rank in leetCode = beats 100% in that runtime range.
  */
 
 #include <assert.h>
@@ -42,11 +42,11 @@
 #include <vector>
 #include <algorithm>
 
-/* static auto ___ = []() {
+static auto ___ = []() {
     std::ios::sync_with_stdio(false);
     std::cin.tie(NULL);
     return 0;
-}(); */
+}();
 
 class Solution {
 public:
@@ -108,31 +108,23 @@ public:
     
     std::string countAndSay2(int n) {
         if (n <= 0) return "";
-        std::vector<size_t> result = {1};
+        std::vector<char> result = {'1'};
         while (--n) {
-            std::vector<size_t> temp;
+            std::vector<char> temp;
             for (size_t index = 0; index < result.size(); ) {
                 size_t count = countDigit(result, index);
-                temp.push_back(count);
+                temp.push_back(static_cast<char>('0' + count));
                 temp.push_back(result[index]);
                 index += count;
             }
             result = temp;
         }
-        std::string out;
-        for (size_t elem : result) out += std::to_string(elem);
-        return out;
+        return std::string(result.begin(), result.end());
     }
     
 private:
-    void showVector(std::vector<size_t>& v) {
-        for (size_t elem : v)
-            std::cout << elem;
-        std::cout << std::endl;
-    }
-    
     inline
-    size_t countDigit(const std::vector<size_t>& buff, const size_t& index) {
+    size_t countDigit(const std::vector<char>& buff, const size_t& index) {
         size_t count = 1;
         for (size_t i = index; 
                 (i < buff.size() - 1) && (buff[i] == buff[i + 1]); 
@@ -151,13 +143,13 @@ private:
 int main(int argc, char* argv[]) {
     Solution test;
     std::cout << test.countAndSay(11) << "\n";
-    std::cout << test.countAndSay2(11) << "\n";
+    std::cout << test.countAndSay2(11) << "\n---\n";
     std::cout << test.countAndSay(20) << "\n";
-    std::cout << test.countAndSay2(20) << "\n";
+    std::cout << test.countAndSay2(20) << "\n---\n";
     std::cout << test.countAndSay(1) << "\n";
-    std::cout << test.countAndSay2(1) << "\n";
+    std::cout << test.countAndSay2(1) << "\n---\n";
     std::cout << test.countAndSay(10) << "\n";
-    std::cout << test.countAndSay2(10) << "\n";
+    std::cout << test.countAndSay2(10) << "\n---\n";
     std::cout << test.countAndSay(13) << "\n";
     std::cout << test.countAndSay2(13) << "\n";
     return 0;
