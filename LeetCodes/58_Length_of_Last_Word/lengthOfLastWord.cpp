@@ -17,14 +17,41 @@
  * 
  * Author: Meisam Amjad amjadm@miamioh.edu
  * 
- * Time in leetCode =  ms
- * Rank in leetCode = beats % in that runtime range.
+ * Time in leetCode = 3 ms
+ * Rank in leetCode = beats 100% in that runtime range.
  */
 
 #include <assert.h>
 #include <iostream>
+#include <string>
+
+static auto ___ = []() {
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(NULL);
+    return 0;
+}();
+
+class Solution {
+public:
+    int lengthOfLastWord(std::string s) {
+        if (s.empty()) return 0;
+        return countLength(s);
+    }
+    
+private:
+    inline
+    int countLength(const std::string& s) {
+        int count = 0, i = s.length() - 1;
+        while (s[i] == ' ') --i;  // Passing empty spaces at the end of s.
+        for (; (i >= 0 && s[i] != ' '); --i, ++count) {}
+        return count;
+    }
+};
 
 int main(int argc, char* argv[]) {
+    Solution test;
+    assert(test.lengthOfLastWord("Hello World") == 5);
+    std::cout << test.lengthOfLastWord("a ") << std::endl;
     return 0;
 }
 
