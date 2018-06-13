@@ -24,13 +24,7 @@
 #include <assert.h>
 #include <iostream>
 
-static int x = []() { 
-    std::ios::sync_with_stdio(false); 
-    std::cin.tie(NULL);  
-    return 0; 
-}();
-
-static int reverseX = []() { 
+static auto ___ = []() { 
     std::ios::sync_with_stdio(false); 
     std::cin.tie(NULL);  
     return 0; 
@@ -39,13 +33,19 @@ static int reverseX = []() {
 class Palindrome {
 public:
     bool isPalindrome(int x) {
-        if ((x < 0 || (x % 10 == 0 && x != 0))) return 0;
+        if (x < 0) return 0;
+        int tmp = x;
         int reverseX = 0;
-        while (x > reverseX) {
+        getReverse(reverseX, tmp);
+        return x == reverseX;
+    }
+private:
+    inline
+    void getReverse(int& reverseX, int& x) {
+        while (x) {
             reverseX = reverseX * 10 + x % 10;
             x /= 10;
         }
-        return ((x == reverseX) || (x == reverseX / 10))? 1: 0;
     }
 };
 
