@@ -41,7 +41,7 @@ public:
         long result = x;
         long tmp = x;
         while (result * result > tmp) {
-            result = (result + tmp / result) / 2;
+            result = (result + tmp / result) * 0.5;
         }
         return result;
     }
