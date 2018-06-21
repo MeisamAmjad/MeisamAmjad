@@ -36,13 +36,13 @@
  * 
  * Author: Meisam Amjad amjadm@miamioh.edu
  * 
- * Time in leetCode =   ms
- * Rank in leetCode = beats  % in that runtime range.
+ * Time in leetCode =  3 ms
+ * Rank in leetCode = beats 98.87 % in that runtime range.
  */
 
 #include <assert.h>
 #include <iostream>
-#include <vector>
+#include <queue>
 
 struct TreeNode {
     int val;
@@ -57,21 +57,23 @@ public:
             return true;
         else if (!p || !q)
             return false;
-        std::vector<TreeNode*> Q1(1); 
-        std::vector<TreeNode*> Q2(1);
-        Q1[0] = p;
-        Q2[0] = q;
+        std::queue<TreeNode*> Q1; 
+        std::queue<TreeNode*> Q2;
+        Q1.push(p);
+        Q2.push(q);
         while (!Q1.empty() && !Q2.empty()) {
-            if (Q1[0] && Q2[0]) {
-                if (Q1[0]->val != Q2[0]->val)
-                    return false;
-                if (Q1[0]->left) Q1.insert(Q1.end(), Q1[0]->left); 
-                if (Q1[0]->right) Q1.insert(Q1.end(), Q1[0]->right);
-                if (Q2[0]->left) Q2.insert(Q2.end(), Q2[0]->left);
-                if (Q2[0]->right) Q2.insert(Q2.end(), Q2[0]->right);
-                Q1.erase(Q1.begin());
-                Q2.erase(Q2.begin());
-            } else {
+            TreeNode *tmp1 = Q1.front();
+            TreeNode *tmp2 = Q2.front();
+            Q1.pop();
+            Q2.pop();
+            if (tmp1 && tmp2) {
+                if (tmp1->val != tmp2->val)
+                    return false;    
+                Q1.push(tmp1->left);              
+                Q1.push(tmp1->right);
+                Q2.push(tmp2->left);
+                Q2.push(tmp2->right);
+            } else if (tmp1 != tmp2) {
                 return false;
             }
         }
@@ -81,12 +83,12 @@ public:
 
 int main(int argc, char** argv) {
     TreeNode *T1 = new TreeNode(1);
-    T1->left = new TreeNode(2); 
-    T1->right = new TreeNode(3); 
+    // T1->left = new TreeNode(2); 
+    T1->right = new TreeNode(2); 
     
     TreeNode *T2 = new TreeNode(1);
-    T2->left = new TreeNode(2);
-    T2->right = new TreeNode(3);
+    // T2->left = new TreeNode(NULL);
+    T2->right = new TreeNode(2);
     
     Solution test;
     std::cout << test.isSameTree(T1, T2);
