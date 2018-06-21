@@ -22,7 +22,7 @@
  * 
  * Author: Meisam Amjad amjadm@miamioh.edu
  * 
- * Time in leetCode =  5 ms
+ * Time in leetCode =  4 ms
  * Rank in leetCode = beats 100 % in that runtime range.
  */
 
