@@ -44,6 +44,12 @@
 #include <iostream>
 #include <queue>
 
+static auto ___ = []() {
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(NULL);
+    return NULL;
+}();
+
 struct TreeNode {
     int val;
     TreeNode *left;
