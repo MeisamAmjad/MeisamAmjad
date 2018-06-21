@@ -42,7 +42,7 @@
 
 #include <assert.h>
 #include <iostream>
-
+#include <vector>
 
 struct TreeNode {
     int val;
@@ -53,11 +53,43 @@ struct TreeNode {
 class Solution {
 public:
     bool isSameTree(TreeNode* p, TreeNode* q) {
-        return 0;
+        if (!p && !q)
+            return true;
+        else if (!p || !q)
+            return false;
+        std::vector<TreeNode*> Q1(1); 
+        std::vector<TreeNode*> Q2(1);
+        Q1[0] = p;
+        Q2[0] = q;
+        while (!Q1.empty() && !Q2.empty()) {
+            if (Q1[0] && Q2[0]) {
+                if (Q1[0]->val != Q2[0]->val)
+                    return false;
+                if (Q1[0]->left) Q1.insert(Q1.end(), Q1[0]->left); 
+                if (Q1[0]->right) Q1.insert(Q1.end(), Q1[0]->right);
+                if (Q2[0]->left) Q2.insert(Q2.end(), Q2[0]->left);
+                if (Q2[0]->right) Q2.insert(Q2.end(), Q2[0]->right);
+                Q1.erase(Q1.begin());
+                Q2.erase(Q2.begin());
+            } else {
+                return false;
+            }
+        }
+        return (Q1.empty() && Q2.empty());
     }
 };
 
 int main(int argc, char** argv) {
+    TreeNode *T1 = new TreeNode(1);
+    T1->left = new TreeNode(2); 
+    T1->right = new TreeNode(3); 
+    
+    TreeNode *T2 = new TreeNode(1);
+    T2->left = new TreeNode(2);
+    T2->right = new TreeNode(3);
+    
+    Solution test;
+    std::cout << test.isSameTree(T1, T2);
     return 0;
 }
 
