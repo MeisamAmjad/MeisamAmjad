@@ -26,8 +26,8 @@
  * 
  * Author: Meisam Amjad amjadm@miamioh.edu
  * 
- * Time in leetCode =   ms
- * Rank in leetCode = beats  % in that runtime range.
+ * Time in leetCode =  4 ms
+ * Rank in leetCode = beats 100 % in that runtime range.
  */
 
 #include <assert.h>
@@ -39,6 +39,25 @@ static auto ___ = []() {
     std::cin.tie(NULL);
     return NULL;
 }();
+
+struct TreeNode {
+    int val;
+    TreeNode *left;
+    TreeNode *right;
+    TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+};
+class Solution {
+public:
+    bool isSymmetric(TreeNode* root) {
+        if (!root) return true;
+        return helper(root->left, root->right);
+    }
+    bool helper(TreeNode* n1, TreeNode* n2) {
+        if (!n1 || !n2) return n1 == n2;
+        if (n1->val != n2->val) return false;
+        return helper(n1->left, n2->right) && helper(n1->right, n2->left);
+    }
+};
 
 int main(int argc, char* argv[]) {
     return 0;
