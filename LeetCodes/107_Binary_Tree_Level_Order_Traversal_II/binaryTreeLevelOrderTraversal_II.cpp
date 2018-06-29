@@ -24,8 +24,8 @@
  * 
  * Author: Meisam Amjad amjadm@miamioh.edu
  * 
- * Time in leetCode =   ms
- * Rank in leetCode = beats  % in that runtime range.
+ * Time in leetCode =  4 ms
+ * Rank in leetCode = beats 100 % in that runtime range.
  */
 
 #include <assert.h>
@@ -75,7 +75,22 @@ public:
     }
 };
 
-int main(int argc, char** argv) {
+int main(int argc, char* argv[]) {
+    TreeNode* root = new TreeNode(0);
+    root->left = new TreeNode(2);
+    root->left->left = new TreeNode(1);
+    root->left->left->left = new TreeNode(5);
+    root->left->left->right = new TreeNode(1);
+    
+    root->right = new TreeNode(4);
+    root->right->left = new TreeNode(3);
+    root->right->right = new TreeNode(-1);
+    root->right->left->right = new TreeNode(6);
+    root->right->right->right = new TreeNode(8);
+    
+    Solution test;
+    assert(test.levelOrderBottom(root) == 
+      (std::vector<std::vector<int>> {{5, 1, 6, 8}, {1, 3, -1}, {2, 4}, {0}}));
     return 0;
 }
 
