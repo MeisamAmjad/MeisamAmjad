@@ -57,36 +57,35 @@ class Solution {
 public:
     bool checkValidString(std::string s) {
         if (s.empty()) return true;
-        std::stack<char> stk1;
-        std::vector<size_t> asterisk;
-        int divider = 0;
-        asterisk.push_back(0);
+        int stk = 0;
+        int asterisk = 0;
         for (size_t i = 0; i < s.size(); ++i) {
             switch (s[i]) {
                 case '(':
-                    if (stk1.empty()) {
-                        asterisk.push_back(0);
-                        ++divider;
-                    }
-                    stk1.push(s[i]); 
+                    stk++;
+                    asterisk++;
                     break;
                 case '*':
-                    asterisk[divider]++; 
+                    if (stk)
+                        stk--;
+                    asterisk++; 
                     break;
                 case ')':
-                    if (!stk1.empty()) 
-                        stk1.pop();
-                    else if (asterisk[divider]) 
-                        asterisk[divider]--;
-                    else 
+                    if (stk)
+                        stk--; 
+                    asterisk--;
+                    if (!stk && asterisk < 0)
                         return false;
             }
         }
-        return stk1.empty() || (stk1.size() <= asterisk[divider]);
+        return !stk;
     }
 };
 
 int main(int argc, char* argv[]) {
+    std::string sample1 = "(())(())(((()*()()()))()((()()(*()())))(((*)()";
+    Solution test;
+    std::cout << test.checkValidString(sample1) << std::endl;
     return 0;
 }
 
