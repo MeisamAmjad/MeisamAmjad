@@ -37,8 +37,8 @@
  * 
  * Author: Meisam Amjad amjadm@miamioh.edu
  * 
- * Time in leetCode =  ms
- * Rank in leetCode = beats % in that runtime range.
+ * Time in leetCode = 3 ms
+ * Rank in leetCode = beats 99.33 % in that runtime range.
  */
 
 #include <assert.h>
