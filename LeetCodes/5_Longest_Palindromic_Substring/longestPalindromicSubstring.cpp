@@ -28,6 +28,7 @@
 #include <string>
 #include <algorithm>
 #include <vector>
+#include <utility>  // std::pair
 
 static auto ___ = []() {
     std::ios::sync_with_stdio(false);
@@ -37,8 +38,10 @@ static auto ___ = []() {
 
 class Solution {
 public:
-    int longestPalindrome1(std::string s) {
-        return recursive(s, 0, s.size() - 1);
+    std::string longestPalindrome1(std::string s) {
+        std::pair<int, int> p = recursive(s, 0, s.size() - 1);
+        // if (s[p.first] != s[p.first + p.second - 1]) p.first++;
+        return s.substr(p.first, p.second);
     }
     
     std::string longestPalindrome2(std::string s) {
@@ -101,18 +104,29 @@ public:
     }
     
 private:
-    int recursive(std::string& s, int i, int j) {
+    std::pair<int, int> recursive(const std::string& s, int i, int j) {
         // Base Case 1: If there is only 1 character
         if (i == j)
-            return 1;
+            return {i, 1};
         // Base Case 2: If there are only 2 characters and both are same
         if ((s[i] == s[j]) && (i + 1 == j))
-            return 2;
+            return {i, 2};
+        // Base case 3: if If there are only 2 characters which aren't the same
+        if ((s[i] != s[j]) && (i + 1 == j))
+            return {i, 0};
         // If the first and last characters match        
-        if (s[i] == s[j])
-            return recursive(s, i + 1, j - 1) + 2;
+        if (s[i] == s[j]) {
+            std::pair<int, int> ans = recursive(s, i + 1, j - 1);
+            return {ans.first, ans.second + 2};
+        }
         // If the first and last characters do not match
-        return std::max(recursive(s, i, j - 1), recursive(s, i + 1, j));
+        return {i, max(recursive(s, i, j - 1), recursive(s, i + 1, j))};
+    }
+    
+    inline
+    int max(const std::pair<int, int>& i,
+                            const std::pair<int, int>& j) {
+        return (i.second > j.second)? i.second: j.second;
     }
     
     inline
@@ -130,17 +144,17 @@ int main(int argc, char* argv[]) {
     std::string sample3 = "bb";
     
     Solution test;
-    std::cout << test.longestPalindrome1(sample1) << std::endl;
-    std::cout << test.longestPalindrome2(sample1) << std::endl;
-    std::cout << test.longestPalindrome3(sample1) << std::endl;
+    std::cout << sample1 + "\t" << test.longestPalindrome1(sample1) << "\n";
+    std::cout << sample1 + "\t" << test.longestPalindrome2(sample1) << "\n";
+    std::cout << sample1 + "\t" << test.longestPalindrome3(sample1) << "\n";
     
-    std::cout << test.longestPalindrome1(sample2) << std::endl;
-    std::cout << test.longestPalindrome2(sample2) << std::endl;
-    std::cout << test.longestPalindrome3(sample2) << std::endl;
+    std::cout << sample2 + "\t" << test.longestPalindrome1(sample2) << "\n";
+    std::cout << sample2 + "\t" << test.longestPalindrome2(sample2) << "\n";
+    std::cout << sample2 + "\t" << test.longestPalindrome3(sample2) << "\n";
     
-    std::cout << test.longestPalindrome1(sample3) << std::endl;
-    std::cout << test.longestPalindrome2(sample3) << std::endl;
-    std::cout << test.longestPalindrome3(sample3) << std::endl;
+    std::cout << sample3 + "\t" << test.longestPalindrome1(sample3) << "\n";
+    std::cout << sample3 + "\t" << test.longestPalindrome2(sample3) << "\n";
+    std::cout << sample3 + "\t" << test.longestPalindrome3(sample3) << "\n";
     return 0;
 }
 
