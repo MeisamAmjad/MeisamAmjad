@@ -1,0 +1,130 @@
+body{
+    background-color: grey;
+}
+figure {
+    border: 1px solid #990100;
+    background-color: #F6F6F6;
+    display: flex;
+    flex-direction: lr;
+    width: 500px;
+}
+figure > img {
+    flex-index: 1 !important;
+    width: 300px;
+}
+figure  figcaption::before {
+    content: "\002607\0000a0caption\A";
+    white-space: pre;
+    font-style: italic;
+    font-variant: small-caps;
+    font-size: 0.5em;
+}
+figure > figcaption {
+    flex-index: 2;
+    width: 100%;
+    padding: 10px;
+    color: #333333;
+    background-color: #E8E8E8;
+    text-align: center;
+    font-size: 2em;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+header{
+    color:purple;
+    font-size: 25px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    letter-spacing: 5px;
+    padding-bottom : 10px;
+}
+video{
+    width:900px;
+    height:506px;
+    padding-bottom: 10px;
+}
+fieldset{
+    display: flex;
+    flex-direction: lr;
+    width: 200px;
+    color: purple;
+    padding-left: 50px;
+    border:8px ridge black;
+}
+fieldset >legend{
+    color: purple;
+    font-size: large;
+    font-weight: bold;
+}
+table {
+    display: inline-block;
+}
+tr td:last-child {
+    border: 8px ridge black;
+    min-width: 250px;
+}
+
+
+@media not print{
+    td.lft{
+        color: white;
+        border: 8px ridge black;
+        min-width: 250px;
+        text-align: left;
+    }
+    .rht{
+        color:white;
+    }
+    .rht222{
+        text-align: right;
+    }
+
+    td img{
+        width: 100px;
+    }
+
+    .srhpic{
+        width: 40px;
+    }
+    #idtest, #logo{
+        color: black !important;
+    }
+    #idtest{
+        min-width: 600px;
+    }
+    
+} 
+
+
+section {
+    margin: 35px;
+    padding: 35px;
+    color: #FFFFFF;
+    text-align: center;
+    font-size: 1.5em;
+    font-weight: bold;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+section.outermost {
+    background-color: #0E4241;
+}
+
+section.regular {
+    background-color: #256363;
+}
+
+section.innermost {
+    background-color: #217773;
+}
+
+
+
+
+
+@font-face{
+    font-family: Caveat;
+    src: url(Fonts/mod3_caveat.ttf) format('truetype');
+}
+.testp{
+    font-weight: bold;
+    font-family: Caveat;
+}

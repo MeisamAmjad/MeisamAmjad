@@ -1,0 +1,74 @@
+/*
+    Example for quick Java compilation and unit tests in VS Code.
+    Works well with simple BlueJ projects.
+    Hit Ctrl+Shift+B to compile currently open file with javac.
+    Hit Ctrl+Shift+T to test currently open test class.
+    See red wiggles for compilation errors / failed assertions or click exclamation mark in the status bar.
+    Uses a few workarounds for individual commands per task and filename without extension.
+    This is written for Windows but it should be easy to adopt for Linux and Mac.
+*/
+{
+    "version": "0.1.0",
+    "isShellCommand": true,
+    "suppressTaskName": true,
+    "showOutput": "silent",
+    "windows": {
+        "command": "powershell",
+        "args": ["-Command"],
+        "tasks": [{
+                // tests the currently open test class. java has to be in %PATH% and the jUnit-jar in %CLASSPATH%.
+                "taskName": "junit",
+                "args": ["$env:CLASSPATH += ';${fileDirname}'; $class = [System.IO.Path]::GetFileNameWithoutExtension('${fileBasename}'); java org.junit.runner.JUnitCore $class | Select-String -NotMatch -Pattern 'at (?!.+${fileBasename})'"],
+                "isTestCommand": true,
+                "problemMatcher": {
+                    "owner": "java",
+                    "fileLocation": ["relative", "${fileDirname}"],
+                    "pattern": [{
+                            "regexp": "^(.*)$",
+                            "message": 1
+                        },
+                        {
+                            "regexp": "^\\s*at .+\\((.+):([0-9]+)\\)$",
+                            "file": 1,
+                            "line": 2
+                        }
+                    ]
+                }
+            },
+            {
+                // compiles the currently open file. javac has to be in %PATH%
+                "taskName": "javac",
+                "args": ["$env:CLASSPATH += ';${fileDirname}'; javac ${file} -Xlint"],
+                "isBuildCommand": true,
+                "problemMatcher": {
+                    "owner": "java",
+                    "fileLocation": "absolute",
+                    "pattern": {
+                        "regexp": "^(.*):([0-9]+): (error|warning): (.*)$",
+                        "file": 1,
+                        "line": 2,
+                        "severity": 3,
+                        "message": 4
+                    }
+                }
+            },
+            {
+                // compiles all files in the folder of the currently opened file
+                "taskName": "javac all",
+                "args": ["$env:CLASSPATH += ';${fileDirname}'; javac ${fileDirname}\\*.java -Xlint"],
+                "showOutput": "silent",
+                "problemMatcher": {
+                    "owner": "java",
+                    "fileLocation": "absolute",
+                    "pattern": {
+                        "regexp": "^(.*):([0-9]+): (error|warning): (.*)$",
+                        "file": 1,
+                        "line": 2,
+                        "severity": 3,
+                        "message": 4
+                    }
+                }
+            }
+        ]
+    }
+}

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+    <head>
+        <title>
+            HTML Page
+        </title>
+        <link rel="stylesheet" type="text/css" href="figure.css" media="screen"/>    <!--href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous" -->
+       <!-- <script type="text/javascript" src="js/script.js"> </script> -->
+    </head>
+
+
+    <body>
+        <header align="center">
+            <table>
+                <tr>
+                    <td class="lft" id="logo">
+                        <img src="button.jpg" alt="logo">
+                            ANNA
+                        </img>
+                    </td>
+                    <td id="idtest">
+                        <i><strong> PAGE IS FOR TESTING INPUT STUFF</strong></i>
+                    </td>
+                    <td class="rht rht222">
+                        <input type="search" name="search" value=""  class="srh" placeholder="Search">
+                        <img src="searchIcon.png" altr="search" class="srhpic"/> 
+                    </td>
+                </tr>
+            </table>
+            
+        </header>
+
+        <main>
+            <center>
+                <video poster="video.png" controls="controls">
+                    <source src="video.webm" type="video/webm" />
+                    <source src="video.ogg" type="video/ogv" />
+                    <source src="video.mp4" type="video/mp4" />
+                    The video tag is not supported by your current browser.
+                </video>
+            </center>
+            <form action="http://www.example.com/formsubmission" method="GET">
+
+                <!-- Input textes -->
+                <fieldset >
+                    <legend  align="center"> Text Data </legend>
+                    First Name:<br />
+                    <input type="text" name="firstName" value=""  required="required" placeholder="Enter your First Name here" /><br />
+                    Last Name:<br />
+                    <input type="text" name="lastName" value="" required="required" placeholder="Enter your Last Name here" /><br />
+                    Email Address:<br />
+                    <input type="email" name="emailAdress" value="" required="required" placeholder="Enter your Email here" /><br />
+                    Website: <br/>
+                    <input name="website" type="url" required="required" placeholder="Enter your website url" /> <br/>
+                </fieldset>
+
+                <!-- Input range of numbers -->
+                <fieldset >
+                    <legend align="center"> Numeric Data </legend>
+                    Age (0-100):<br />
+                    <label for="clik"> ---</label>
+                    <input id="clik" onclick="showmes(name, value)" type="range" name="age" min="0" max="100" value="25" /><br />
+                    <br />
+                </fieldset>
+
+                <!-- radio input-->
+                <br/>
+                <fieldset> 
+                    <legend align="center"> Approva Part </legend> <!-- point here is the both names are the same -->
+                    Yes : <input type="radio" name="approve" value="true" checked="checked" /> <br/>
+                    No  : <input type="radio" name="approve" value="false"/>
+                </fieldset> <br/>
+
+                <!-- submit button -->
+                <br/>
+                <time datetime="2015-12-13T08:30:00-05:00">
+                    <center>
+                        <input type="submit" value="Click Here to Submit" style="background-color: black; color: white; font-size:xx-large"/>
+                        <br/>
+                        End OF Submition Form
+                    </center>
+                </time>
+            </form>
+
+            <!-- having a one paragraph of article -->
+
+            <!-- or I can use section instead -->
+            <!-- SECTION -->
+            <article>
+                <h1 align="left">
+                    Technology Story
+                </h1>
+                <p class="testp">
+                    Morbi eget justo ut velit dapibus malesuada. Nunc elementum, neque quis convallis tempus, lacus ante tristique est, id porta tortor leo eget orci. Suspendisse hendrerit interdum lacus et condimentum. Mauris at ex dignissim, bibendum libero at, fermentum lectus. Maecenas porttitor purus quis augue interdum, eget malesuada neque placerat. Ut hendrerit risus in nibh elementum, quis vestibulum ipsum vulputate. Nulla facilisi. In consectetur et lacus vel tincidunt. Quisque feugiat ipsum et erat rhoncus efficitur. In in augue at enim tempor sollicitudin.
+                    <a href="#" target="_blank">
+                        Read More...
+                    </a>
+                </p>
+            </article>
+
+            <!-- using figure-->
+            <figure>
+                <img src="sample.png" alt="sample picture">
+                <figcaption>
+                    This is a simple figure for test
+                </figcaption>
+
+            </figure>  
+
+            <!-- Button input and using an Image -->
+            <button onclick="clickHandler()">
+                <img src="button.jpg" width="100" alt="button here" />
+                <b Just For Test />
+            </button>  <br/>
+
+            <!-- having file input type -->
+            <br/>
+            Select Your File: <input type="file" name="f01" /><br/>
+
+            <!-- select input type -->
+            <br/>
+            <select name="selects">
+                <optgroup>
+                    <option value="qqqq"> Item1 </option>
+                    <option value="www"> Item2 </option>
+                </optgroup>
+                <optgroup>
+                    <option value="333" selected> Item3 </option>
+                    <option value="444"> Item4 </option>
+                </optgroup>
+            </select><br/>
+
+            <!-- select input type -->
+            <br/>
+            Please input your Comment: <br/>
+            <textarea name="comment" value="" rows="4" cols="50" placeholder="Please write your comment here">
+            </textarea> <br/>
+
+
+
+
+            <fieldset>
+                <legend>Text Value</legend>
+                Position: <input type="text" name="position" value="" />
+            </fieldset>
+            <fieldset>
+                <legend>Radio Value</legend>
+                <em>Department</em><br />
+                FIELD: <input type="radio" name="department" value="Field" checked="checked" /><br />
+                ITOPS: <input type="radio" name="department" value="IT Operations" /><br />
+                SALES: <input type="radio" name="department" value="Sales" /><br />
+                MGMT: <input type="radio" name="department" value="Management" />
+            </fieldset>
+            <button type="button" onclick="saveTextValue()">Save Text</button>
+            <button type="button" onclick="saveRadioValue()">Save Radio</button>
+
+            <section class="outermost">
+                <section class="regular">
+                    <section class="innermost">
+                        Click Me!
+                    </section>
+                </section>
+            </section>
+
+        </main>
+    </body>
+    <script type="text/javascript" src="js/script.js"> </script>
+</html>
