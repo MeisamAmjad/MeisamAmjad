@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?><module codename="org.myorg.reporttiming">
+    <module_version install_time="1529647695199" last="true" origin="installer" specification_version="1.0">
+        <file crc="1386790389" name="config/Modules/org-myorg-reporttiming.xml"/>
+        <file crc="1315912126" name="modules/org-myorg-reporttiming.jar"/>
+    </module_version>
+</module>

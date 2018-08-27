@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE filesystem PUBLIC "-//NetBeans//DTD Filesystem 1.2//EN"
+                            "http://www.netbeans.org/dtds/filesystem-1_2.dtd">
+<filesystem>
+    <folder name="Actions">
+        <folder name="File">
+            <file name="org-myorg-reporttiming-timingActionListener.instance">
+                <!--org.myorg.reporttiming.timingActionListener-->
+                <attr
+                    bundlevalue="org.myorg.reporttiming.Bundle#CTL_timingActionListener" name="displayName"/>
+                <attr
+                    methodvalue="org.openide.awt.Actions.alwaysEnabled" name="instanceCreate"/>
+                <attr name="delegate" newvalue="org.myorg.reporttiming.timingActionListener"/>
+                <attr name="iconBase" stringvalue="org/myorg/reporttiming/clock.png"/>
+                <attr boolvalue="false" name="noIconInMenu"/>
+            </file>
+        </folder>
+    </folder>
+    <folder name="Toolbars">
+        <folder name="File">
+            <file name="org-myorg-reporttiming-timingActionListener.shadow">
+                <!--org.myorg.reporttiming.timingActionListener-->
+                <attr name="originalFile" stringvalue="Actions/File/org-myorg-reporttiming-timingActionListener.instance"/>
+                <attr intvalue="0" name="position"/>
+            </file>
+        </folder>
+    </folder>
+</filesystem>
