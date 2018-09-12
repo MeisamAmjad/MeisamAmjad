@@ -1,0 +1,86 @@
+\chapter{Correlation Function Code II}
+We show the code in QuTiP to generate Fig.~\ref{fig8g2tau}.
+
+\begin{verbatim}
+import math
+import pylab as pl
+from qutip import *
+
+# system parameters
+n = 3
+m = 128
+gamma = 1
+kappa = 0.5
+Y = 0.01
+g = 1/sqrt(2.0)
+g_M = 1
+omega_M = 1
+kappa_M = 0.1
+ntraj = 1
+
+# initial state
+psi0 = tensor(fock(2,1), fock(n,0), fock(m,0))
+
+# operators
+sm = tensor(sigmam(), qeye(n), qeye(m))
+a = tensor(qeye(2), destroy(n), qeye(m))
+b = tensor(qeye(2), qeye(n), destroy(m))
+
+# collapse operators
+collapse = [sqrt(2*kappa)*a, sqrt(gamma)*sm]
+
+# expectation values
+evalue_list = [a.dag()*a, sm.dag()*sm, b.dag()*b]
+
+# find the expectation values
+times_list = linspace(0,20,4000)
+
+H = omega_M*b.dag()*b + Y*(a + a.dag()) + g*((a*sm.dag()) + (a.dag()*sm)) 
++ g_M*a.dag()*a*(b + b.dag())
+
+evalues = mcsolve(H, psi0, times_list, ntraj, collapse, evalue_list)
+
+# determine second initial state
+next_state = mcsolve(H, psi0, times_list, ntraj, collapse, [])
+psi_ss = next_state[0][-1]
+
+psi1 = a*psi_ss
+psi2 = sm*psi_ss
+psi3 = b*psi_ss
+
+# calculate correlations for g(2)aa
+evalues_a = mcsolve(H, psi1, times_list, ntraj, collapse, evalue_list)
+
+counter_max = len(times_list)
+
+g2_aa_list = []
+
+for tau in arange(counter_max):
+    g2_aa_list.append(evalues_a[0][tau]/evalues[0][-1])
+
+# calculate correlations for g(2)ga
+evalues_g = mcsolve(H, psi2, times_list, ntraj, collapse, evalue_list)
+
+g2_ga_list = []
+
+for tau in arange(counter_max):
+    g2_ga_list.append(evalues_g[0][tau]/evalues[0][-1])
+
+# calculate correlations for g(2)ba
+evalues_b = mcsolve(H, psi3, times_list, ntraj, collapse, evalue_list)
+
+g2_ba_list = []
+
+for tau in arange(counter_max):
+    g2_ba_list.append(evalues_b[0][tau]/evalues[0][-1])
+
+# plot the correlation functions
+pl.plot(times_list, g2_aa_list)
+pl.show()
+
+pl.plot(times_list, g2_ga_list)
+pl.show()
+
+pl.plot(times_list, g2_ba_list)
+pl.show()
+\end{verbatim}

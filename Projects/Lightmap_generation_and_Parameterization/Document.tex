@@ -1,0 +1,136 @@
+\documentclass[12pt, oneside]{book}
+
+%\usepackage[parfill]{parskip}
+\usepackage{acronym, graphicx, placeins, subfig, color, tabu, todonotes, subcaption, amssymb, amsmath, amscd, fullpage, epstopdf, appendix, hyperref, setspace, tensor, url, verbatim}
+\usepackage[inline]{enumitem}
+%\numberwithin{equation}{section}
+
+\hypersetup{colorlinks, citecolor = black, filecolor = black, linkcolor = black, urlcolor = black, linktocpage}
+
+\onehalfspacing
+
+\newcommand{\be}{\begin{equation}}
+\newcommand{\ee}{\end{equation}}
+\newcommand{\adag}{a^{\dag}}
+\newcommand{\bra}[1]{\langle #1 \vert}
+\newcommand{\ket}[1]{\vert #1\rangle}
+\newcommand{\braket}[2]{\langle #1\vert #2\rangle}
+\newcommand{\sminus}{\sigma_-}
+\newcommand{\splus}{\sigma_+}
+
+\DeclareMathOperator{\tr}{tr}
+\newcommand{\evalue}[1]{\left\langle #1 \right\rangle}
+\newcommand{\comm}[2]{\left[ #1, \, #2 \right]}
+\newcommand{\modsq}[1]{\left\lvert #1 \right\rvert^2}
+\newcommand{\REC}{\text{REC}}
+\newcommand{\es}{\emptyset}
+\newcommand{\recA}{\{ A \}}
+\newcommand{\recB}{\{ B \}}
+\newcommand{\recCTp}{\{ C_{T'} \}}
+\newcommand{\recD}{\{ D \}}
+\newcommand{\recETp}{\{ E_{T'} \}}
+\newcommand{\sL}{\mathcal{L}}
+\newcommand{\ZPF}{\text{ZPF}}
+\newcommand{\bdag}{b^{\dag}}
+
+\begin{document}
+\thispagestyle{empty}
+\singlespacing
+
+\begin{center}
+    ABSTRACT\\
+    \vspace{2.0cm}
+    Lightmap Generation and Parameterization\\
+    \vspace{1.0cm}
+    by Meisam Amjad\\
+    \vspace{1.0cm}
+\end{center}
+
+\noindent Work to date in cavity optomechanics has focused primarily on the coupling between the cavity field and the mechanical oscillator. We investigate a weakly driven, damped optomechanical cavity containing a two-level atom with an oscillating end mirror or an intracavity dielectric membrane. We carry out numerical simulations of the system using the framework of quantum trajectories, implemented with the Quantum Toolbox in Python (QuTiP). We calculate the cavity probe spectrum and various second-order correlations, finding they are modified by the coupling between the cavity field and the mechanical oscillator.
+
+\newpage
+
+\thispagestyle{empty}
+
+\frontmatter
+
+\onehalfspacing
+
+\begin{titlepage}
+\begin{center}
+PROBE SPECTRA AND PHOTON STATISTICS IN A \\ WEAKLY-DRIVEN CAVITY OPTOMECHANICAL SYSTEM
+
+\vspace{1.5cm}
+
+A Thesis \\
+
+\vspace{0.5cm}
+
+Submitted to the \\
+Faculty of Miami University \\
+in partial fulfillment of \\
+the requirements for the degree of \\
+Master of Science \\
+Department of Physics \\
+by \\
+Andrew Jacobs \\
+Miami University \\
+Oxford, Ohio \\
+2012
+
+\vspace{1.5cm}
+
+\emph{Advisor}: \rule[-0.1cm]{8cm}{0.01cm} \\
+(James Clemens) \\
+\vspace{1.5cm}
+\emph{Reader}: \rule[-0.1cm]{8cm}{0.01cm} \\
+(Perry Rice) \\
+\vspace{1.5cm}
+\emph{Reader}: \rule[-0.1cm]{8cm}{0.01cm} \\
+(Samir Bali) \\
+\end{center}
+\end{titlepage}
+
+\if@xetex
+	\cleardoublepage
+	\phantomsection
+\else
+	\ifpdf
+		\cleardoublepage
+		\phantomsection
+	\else
+		\cleardoublepage
+	\fi
+\fi
+
+\setcounter{page}{2}
+\tableofcontents
+\setcounter{tocdepth}{2}
+\listoffigures
+
+\newpage
+
+\begin{center} ACKNOWLEDGEMENTS \end{center}
+
+\noindent I would first like to thank my advisor, Dr. James Clemens, for presenting me with this interesting problem full of rich detail, and for many conversations providing critical guidance throughout the project. I also thank him for helping me to grow as an overall student of physics, during both my time as an undergraduate and graduate student. I also thank Drs. Perry Rice and Samir Bali, for taking the time to read this thesis and offer their insights, as well as for a great deal of friendly conversation and enjoyable classroom instruction during my time in Oxford. There are countless other faculty members who deserve similar accolades, but the list is too lengthy to be shown here in completion. Last, but certainly not least, I offer a great deal of thanks to my friends and family (again, a list too lengthy to present in this space), without whom I would have lacked crucial support and guidance in maintaining my interest and desire to finish this graduate program.
+
+\mainmatter
+
+\include{Thesis/Chapters/Introduction/Introduction.tex}
+\include{Thesis/Chapters/Theory/Frameworks.tex}
+\include{Thesis/Chapters/Classical/Classical.tex}
+\include{Thesis/Chapters/Quantum/Quantum.tex}
+\include{Thesis/Chapters/Conclusion/Conclusion.tex}
+
+\appendix
+\include{Appendices/A1}
+\include{Appendices/A2}
+\include{Appendices/A3}
+\include{Appendices/A4}
+
+\backmatter
+
+\bibliographystyle{unsrt}
+\addcontentsline{toc}{chapter}{References}
+\bibliography{Thesis}
+\end{document}

@@ -1,0 +1,56 @@
+\chapter{Correlation Function Code I}
+We show the code in QuTiP to generate Fig.~\ref{fig7g20}.
+
+\begin{verbatim}
+import math
+import pylab as pl
+from qutip import *
+
+# system parameters
+n = 3
+m = 128
+gamma = 1
+kappa = 0.5
+Y = 0.01
+g = 1/sqrt(2.0)
+omega_M = 1
+kappa_M = 0.1
+ntraj = 1
+
+# initial state
+psi0 = tensor(fock(2,1), fock(n,0), fock(m,0))
+
+# operators
+sig_plus = tensor(sigmap(), qeye(n), qeye(m))
+a = tensor(qeye(2), destroy(n), qeye(m))
+b = tensor(qeye(2), qeye(n), destroy(m))
+
+# collapse operators
+collapse = [sqrt(2*kappa)*a, sqrt(gamma)*sig_plus.dag(), sqrt(kappa_M)*b]
+
+# expectation values
+evalue_list = [a.dag()*a.dag()*a*a, a.dag()*a*sig_plus*sig_plus.dag(), a.dag()*a,
+ sig_plus*sig_plus.dag()]
+
+# lists of steady-state values
+fieldfield_list = []
+atomfield_list = []
+
+times_list = linspace(0,20,2000)
+gM_list = linspace(0,3,200)
+
+# build the correlation plots
+for g_M in gM_list:
+    H = omega_M*b.dag()*b + Y*(a + a.dag()) 
+    + g*((a*sig_plus) + (a.dag()*sig_plus.dag())) + g_M*a.dag()*a*(b + b.dag())
+    evalues = mcsolve(H, psi0, times_list, ntraj, collapse, evalue_list)
+    fieldfield_list.append(evalues[0][-1]/(evalues[2][-1]**2))
+    atomfield_list.append(evalues[1][-1]/(evalues[2][-1]*evalues[3][-1]))
+
+# plot the correlation functions
+pl.plot(gM_list, fieldfield_list, 'r', gM_list, atomfield_list, 'b')
+pl.xlabel('g_M')
+pl.ylabel('intensity correlation values')
+pl.legend(('field-field', 'atom-field'))
+pl.show()
+\end{verbatim}

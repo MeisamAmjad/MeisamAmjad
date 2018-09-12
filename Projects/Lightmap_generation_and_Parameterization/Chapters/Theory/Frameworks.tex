@@ -1,0 +1,624 @@
+\chapter{Theoretical Frameworks}
+With this portion of the thesis, we introduce three essential aspects of the theoretical background of our approach to cavity optomechanics. First, we start with the Schr\"{o}dinger equation and, using the system-plus-reservoir approach detailed by Carmichael in \cite{howard1}, invoke the Born-Markov approximation to derive the master equation in standard Lindblad form, a necessary result for open quantum systems. Second, we again follow the approach of Carmichael in \cite{howard2} to describe the theory of quantum trajectories, a crucial technique for following the time evolution of a quantum system, in this case the optomechanical cavity. Lastly, we describe the basic approach in our choice of Hamiltonian and parameters of note in the cOM apparatus.
+
+\section{Derivation of the Master Equation}
+We begin by writing a Hamiltonian of three terms,
+%
+\be H = H_S + H_R + H_{SR}, \label{eq2.1} \ee
+%
+describing the respective dynamics of the system, the reservoir, and their interaction \cite{howard1}. The full density operator describing both the system and reservoir is denoted $\chi(t)$, and taking the partial trace over the reservoir yields
+%
+\be \rho(t) = \tr_R \chi(t), \label{eq2.2} \ee
+%
+the density operator describing only the system. Note that, in general, the expectation value for some observable $\hat{O}$ of the system can be calculated using the density operator by
+%
+\[ \evalue{\hat{O}} = \tr_{SR} \left( \hat{O} \chi \right) = \tr_S \left( \hat{O} \, \tr_R \chi \right) = \tr_S \left( \hat{O} \rho \right). \]
+%
+In the second equality, we have pulled the operator $\hat{O}$ through the partial trace over the reservoir as it is only affected by system dynamics, while the final equality reflects \eqref{eq2.2}. Note that, for the time being, we suppress writing any time dependence. We write the equation of motion for the full density operator as
+%
+\be \dot{\chi} = -\frac{i}{\hbar} \comm{H}{\chi}, \label{eq2.3} \ee
+%
+where $H$ is the full Hamiltonian of \eqref{eq2.1}. This can be validated by first expanding the density operator as a sum over state vectors,
+%
+\be \chi = \sum_{\ket{\psi}} P_{\ket{\psi}} \, \ket{\psi} \bra{\psi}, \label{eq2.4} \ee
+%
+where $P_{\ket{\psi}}$ is the probability for a given state vector. We then calculate the explicit form of the left-hand side of \eqref{eq2.3},
+%
+\be \dot{\chi} = \sum_{\ket{\psi}} P_{\ket{\psi}} \left( \ket{\psi} \bra{\dot{\psi}} + \ket{\dot{\psi}} \bra{\psi} \right). \label{eq2.5} \ee
+%
+Using the Schr\"{o}dinger equation,
+%
+\[ \ket{\dot{\psi}} = -\frac{i}{\hbar} H \ket{\psi}, \quad \bra{\dot{\psi}} = \bra{\psi} H \left( \frac{i}{\hbar} \right), \]
+%
+we may rewrite \eqref{eq2.5} as
+%
+\be \dot{\chi} = -\frac{i}{\hbar} H\chi + \frac{i}{\hbar} \chi H, \label{eq2.6} \ee
+%
+verifying \eqref{eq2.3}. Transforming to the interaction picture, we define a modified composite density operator,
+%
+\be \tilde{\chi} = e^{i(H_S + H_R)t/\hbar} \, \chi \, e^{-i(H_S + H_R)t/\hbar}. \label{eq2.7} \ee
+%
+Taking the time derivative of \eqref{eq2.7} we find,
+%
+\be \dot{\tilde{\chi}} = e^{\alpha t} \, \chi \left( -\alpha \right) e^{-\alpha t} + e^{\alpha t} \, \dot{\chi} \, e^{-\alpha t} + \alpha \, e^{\alpha t} \, \chi \, e^{-\alpha t}, \label{eq2.8} \ee
+%
+where we have defined
+%
+\be \alpha \equiv \frac{i}{\hbar} \left( H_S + H_R \right). \label{eq2.9} \ee
+%
+Using the relations \eqref{eq2.6} and \eqref{eq2.7}, as well as the fact that $H_S$ and $H_R$ commute both with themselves and each other, we rewrite \eqref{eq2.8} as
+%
+\[ \dot{\tilde{\chi}} = -\frac{i}{\hbar} \tilde{\chi} \left( H_S + H_R \right) + \alpha \tilde{\chi} - \frac{i}{\hbar} e^{\alpha t} \comm{H}{\chi} e^{-\alpha t}, \]
+%
+or
+%
+\be \dot{\tilde{\chi}} = \frac{i}{\hbar} \comm{H_S + H_R}{\tilde{\chi}} - \frac{i}{\hbar} e^{\alpha t} \comm{H_S + H_R + H_{SR}}{\chi} e^{-\alpha t}. \label{eq2.10} \ee
+%
+We pause to note that without the interaction Hamiltonian $H_{SR}$, the modified composite density operator $\tilde{\chi}$ becomes static in time. Returning to \eqref{eq2.10}, if we split up the second commutator such that $H_{SR}$ stands alone, the equation of motion for $\tilde{\chi}$ simplifies greatly to
+%
+\be \dot{\tilde{\chi}} = -\frac{i}{\hbar} e^{\alpha t} \comm{H_{SR}}{\chi} e^{-\alpha t}. \label{eq2.11} \ee
+%
+We cleverly choose to rewrite the commutator as
+%
+\[ \comm{H_{SR}}{\chi} \to H_{SR} \left( e^{-\alpha t} e^{\alpha t} \right) \chi - \chi \left( e^{-\alpha t} e^{\alpha t} \right) H_{SR}, \]
+%
+such that \eqref{eq2.11} becomes
+%
+\be \dot{\tilde{\chi}} = -\frac{i}{\hbar} \comm{\tilde{H}_{SR}}{\tilde{\chi}}, \label{eq2.12} \ee
+%
+where we have defined
+%
+\be \tilde{H}_{SR} \equiv e^{\alpha t} \, H_{SR} \, e^{-\alpha t}. \label{eq2.13} \ee
+%
+We now have an equation of motion where both the density operator and Hamiltonian are written in the interaction picture. This defines a valid scheme for damping in the system due to coupling with some type of thermal reservoir. This form represents a substantial simplification because, after two transformations, one each to $H_{SR}$ and $\chi$, the individual system and reservoir Hamiltonians have vanished. In this treatment, they are considered a baseline that is subtracted away, allowing us to focus strictly on the interaction terms.
+
+Ultimately, we are looking to obtain an equation of motion, a master equation, for the reduced density operator $\rho(t)$ of \eqref{eq2.2} reflecting the dynamics of the system. In our approach, as per \cite{howard1}, we continue by integrating \eqref{eq2.12} with respect to time,
+%
+\be \int_0^t \frac{d}{dt'} (\tilde{\chi}) \, dt' = -\frac{i}{\hbar} \int_0^t \comm{\tilde{H}_{SR}(t')}{\tilde{\chi}(t')} dt', \label{eq2.14} \ee
+%
+where we have reintroduced the time dependence of the various operators. This simplifies to
+%
+\be \tilde{\chi}(t) = \tilde{\chi}(0) - \frac{i}{\hbar} \int_0^t \comm{\tilde{H}_{SR}(t')}{\tilde{\chi}(t')} dt', \label{eq2.15} \ee
+%
+and substituting \eqref{eq2.15} into \eqref{eq2.12} yields
+%
+\begin{align} \dot{\tilde{\chi}}(t) &= -\frac{i}{\hbar} \comm{\tilde{H}_{SR}(t)}{\left\{ \tilde{\chi}(0) - \frac{i}{\hbar} \int_0^t \comm{\tilde{H}_{SR}(t')}{\tilde{\chi}(t')} dt' \right\}} \nonumber \\
+&= -\frac{i}{\hbar} \comm{\tilde{H}_{SR}(t)}{\tilde{\chi}(0)} - \frac{1}{\hbar^2} \int_0^t \comm{\tilde{H}_{SR}(t)}{\comm{\tilde{H}_{SR}(t')}{\tilde{\chi}(t')}} dt'. \label{eq2.16} \end{align}
+%
+We now make our first approximation, which is that for time $t = 0$, the system $S$ and reservoir $R$ factorize; in other words, the system and reservoir are initially noninteracting. This allows us to write the composite density operator as the product of density operators describing the system and reservoir individually,
+%
+\be \chi(0) = \rho(0) \, R_0. \label{eq2.17} \ee
+%
+Keeping this condition in mind, we consider the partial trace $\tr_R \tilde{\chi}(t)$; based on \eqref{eq2.2} we might infer that $\tr_R \tilde{\chi}(t) = \tilde{\rho}(t)$, but it would be wise to show this formally. Using the explicit form of the modified composite density operator, the partial trace is
+%
+\be \tr_R \tilde{\chi}(t) = \tr_R \left[ e^{\alpha t} \, \chi(t) \, e^{-\alpha t} \right]. \label{eq2.18} \ee
+%
+Separating system and reservoir terms using \eqref{eq2.9}, the latter partial trace becomes
+%
+\begin{align} \tr_R \tilde{\chi}(t) &= \tr_R \left[ e^{iH_S t/\hbar} \, e^{iH_R t/\hbar} \, \chi(t) \, e^{-iH_R t/\hbar} \, e^{-iH_S t/\hbar} \right] \nonumber \\
+&= e^{iH_S t/\hbar} \, \tr_R \left[ e^{iH_R t/\hbar} \, \chi(t) \, e^{-iH_R t/\hbar} \right] e^{-iH_S t/\hbar}, \label{eq2.19} \end{align}
+%
+where we have pulled system terms through the partial trace over the reservoir. Using the cyclic property of the trace, the reservoir exponentials cancel in \eqref{eq2.19}, and based on \eqref{eq2.2} we find that
+%
+\be \tr_R \tilde{\chi}(t) = e^{iH_S t/\hbar} \, \rho(t) \, e^{-iH_S t/\hbar} = \tilde{\rho}(t). \label{eq2.20} \ee
+%
+This verifies our earlier inference. Considering \eqref{eq2.16}, \eqref{eq2.17}, and \eqref{eq2.20}, we can now write the partial trace over the reservoir of the equation of motion for $\tilde{\chi}$,
+%
+\be \begin{split} \tr_R \dot{\tilde{\chi}}(t) &= -\frac{i}{\hbar} \, \tr_R \left\{ \comm{\tilde{H}_{SR}(t)}{\tilde{\rho}(0) \, \tilde{R}_0} \right\} \\ &\qquad - \frac{1}{\hbar^2} \int_0^t \tr_R \left\{ \comm{\tilde{H}_{SR}(t)}{\comm{\tilde{H}_{SR}(t')}{\tilde{\chi}(t')}} \right\} dt', \label{eq2.21} \end{split} \ee
+%
+which simplifies to
+%
+\be \dot{\tilde{\rho}} = -\frac{1}{\hbar^2} \int_0^t \tr_R \left\{ \comm{\tilde{H}_{SR}(t)}{\comm{\tilde{H}_{SR}(t')}{\tilde{\chi}(t')}} \right\} dt'. \label{eq2.22} \ee
+%
+The first term in \eqref{eq2.21} vanishes on the assumption that any reservoir operators have zero mean in $R_0$. If this is not already the case, it can be arranged by including a term $\tr_R(H_{SR} R_0)$ in the system Hamiltonian $H_S$. We now have a differential equation in $\tilde{\rho}$ via \eqref{eq2.22}.
+
+A second approximation is now introduced, which states that system and reservoir correlations arise at order $H_{SR}$, and are assumed to be small. Physically, this means the system only weakly affects the reservoir due to the large size of the latter. We write
+%
+\be \tilde{\chi}(t) = \tilde{\rho}(t) \, R_0 + O(H_{SR}), \label{eq2.23} \ee
+%
+where $R_0$ is stationary. This approximation is indicative of time-dependent perturbation theory, and we keep only terms to second order in $H_{SR}$. We rewrite \eqref{eq2.22} as
+%
+\be \dot{\tilde{\rho}}(t) = -\frac{1}{\hbar^2} \int_0^t \tr_R \left\{ \comm{\tilde{H}_{SR}(t)}{\comm{\tilde{H}_{SR}(t')}{\tilde{\rho}(t') \, R_0}} \right\} dt'. \label{eq2.24} \ee
+%
+The condition represented by \eqref{eq2.23} is known as the Born approximation. It leads logically to the second approximation essential to our approach, where we simplify the reduced density operator as
+%
+\be \tilde{\rho}(t') \to \tilde{\rho}(t), \label{eq2.25} \ee
+%
+which indicates the system has ``no memory.'' Physically, this indicates that energy will leak out of the system into the reservoir and not return; the time evolution of the system depends only upon its present state and is unaffected by past conditions. We have defined the Markov approximation, and as such \eqref{eq2.23} and \eqref{eq2.25} collectively represent the Born-Markov approximation. Equation~\eqref{eq2.24} can now be written as
+%
+\be \dot{\tilde{\rho}}(t) = -\frac{1}{\hbar^2} \int_0^t \tr_R \left\{ \comm{\tilde{H}_{SR}(t)}{\comm{\tilde{H}_{SR}(t')}{\tilde{\rho}(t) \, R_0}} \right\} dt'. \label{eq2.26} \ee
+%
+It is important that we pause at this point to justify the use of the Markov approximation. In order to do so, we recast the interaction Hamiltonian as a sum of products of system ($s_i$) and reservoir ($\Gamma_i$) operators,
+%
+\be H_{SR} = \hbar \sum_i s_i(t) \, \Gamma_i(t). \label{eq2.27} \ee
+%
+In the interaction picture, the Hamiltonian becomes
+%
+\begin{align} \tilde{H}_{SR} &= \hbar \sum_i e^{\alpha t} \, s_i(t) \, \Gamma_i(t) \, e^{-\alpha t} \nonumber \\
+&= \hbar \sum_i \left[ e^{iH_S t/\hbar} \, s_i(t) \, e^{-iH_S t/\hbar} \right] \left[ e^{iH_R t/\hbar} \, \Gamma_i(t) \, e^{-iH_R t/\hbar} \right] \nonumber \\
+&= \hbar \sum_i \tilde{s}_i(t) \, \tilde{\Gamma}_i(t). \label{eq2.28} \end{align}
+%
+Invoking only the Born approximation at this time, substituting \eqref{eq2.28} into \eqref{eq2.24} yields
+%
+\be \dot{\tilde{\rho}}(t) = -\sum_{i,j} \int_0^t \tr_R \left\{ \comm{\tilde{s}_i(t) \, \tilde{\Gamma}_i(t)}{\comm{\tilde{s}_j(t') \, \tilde{\Gamma}_j(t')}{\tilde{\rho}(t') \, R_0}} \right\} dt', \label{eq2.29} \ee
+%
+where the double sum is a result of the different times at which the operators are considered ($t$ versus $t'$). We expand \eqref{eq2.29} as
+%
+\be \begin{split} \dot{\tilde{\rho}}(t) &= -\sum_{i,j} \int_0^t \tr_R \left\{ \tilde{s}_i(t) \, \tilde{\Gamma}_i(t) \comm{\tilde{s}_j(t') \, \tilde{\Gamma}_j(t')}{\tilde{\rho}(t') \, R_0} \right. \\
+&\qquad \left. - \comm{\tilde{s}_j(t') \, \tilde{\Gamma}_j(t')}{\tilde{\rho}(t') \, R_0} \tilde{s}_i(t) \, \tilde{\Gamma}_i(t) \right\} dt', \label{eq2.30} \end{split} \ee
+%
+and by expanding the remaining commutators,
+%
+\be \begin{split} \dot{\tilde{\rho}}(t) &= -\sum_{i,j} \int_0^t \tr_R \left\{ \tilde{s}_i(t) \, \tilde{\Gamma}_i(t) \, \tilde{s}_j(t') \, \tilde{\Gamma}_j(t') \, \tilde{\rho}(t') \, R_0 \right. \\
+&\qquad - \tilde{s}_i(t) \, \tilde{\Gamma}_i(t) \, \tilde{\rho}(t') \, R_0 \, \tilde{s}_j(t') \, \tilde{\Gamma}_j(t') - \tilde{s}_j(t') \, \tilde{\Gamma}_j(t') \, \tilde{\rho}(t') \, R_0 \, \tilde{s}_i(t) \, \tilde{\Gamma}_i(t) \\
+&\qquad + \left. \tilde{\rho}(t') \, R_0 \, \tilde{s}_j(t') \, \tilde{\Gamma}_j(t') \, \tilde{s}_i(t) \, \tilde{\Gamma}_i(t) \right\} dt'. \label{eq2.31} \end{split} \ee
+%
+By pulling any system operators, namely the $\tilde{s}_i$, $\tilde{s}_j$, and $\tilde{\rho}$, through the partial trace over the reservoir, \eqref{eq2.31} becomes slightly more compact:
+%
+\be \begin{split} \dot{\tilde{\rho}}(t) &= -\sum_{i,j} \int_0^t \left\{ \tilde{s}_i(t) \, \tilde{s}_j(t') \, \tilde{\rho}(t') \, \tr_R \left[ \tilde{\Gamma}_i(t) \, \tilde{\Gamma}_j(t') \, R_0 \right] \right. \\
+&\qquad - \tilde{s}_i(t) \, \tilde{\rho}(t') \, \tilde{s}_j(t') \, \tr_R \left[ \tilde{\Gamma}_i(t) \, R_0 \, \tilde{\Gamma}_j(t') \right] \\
+&\qquad - \tilde{s}_j(t') \, \tilde{\rho}(t') \, \tilde{s}_i(t) \, \tr_R \left[ \tilde{\Gamma}_j(t') \, R_0 \, \tilde{\Gamma}_i(t) \right] \\
+&\qquad + \left. \tilde{\rho}(t') \, \tilde{s}_j(t') \, \tilde{s}_i(t) \, \tr_R \left[ R_0 \, \tilde{\Gamma}_j(t') \, \tilde{\Gamma}_i(t) \right] \right\} dt'. \label{eq2.32} \end{split} \ee
+%
+Using both the cyclic property of the trace and the relation $\tr_R (\hat{O} \hat{\chi}) = \langle \hat{O} \rangle$, where $\hat{\chi}$ is a generalized density matrix, we arrive at
+%
+\be \begin{split} \dot{\tilde{\rho}}(t) &= -\sum_{i,j} \int_0^t \left\{ \left[ \tilde{s}_i(t) \, \tilde{s}_j(t') \, \tilde{\rho}(t') - \tilde{s}_j(t') \, \tilde{\rho}(t') \, \tilde{s}_i(t) \right] \evalue{\tilde{\Gamma}_i(t) \, \tilde{\Gamma}_j(t')} \right. \\
+&\qquad + \left. \left[ \tilde{\rho}(t') \, \tilde{s}_j(t') \, \tilde{s}_i(t) - \tilde{s}_i(t) \, \tilde{\rho}(t') \, \tilde{s}_j(t') \right] \evalue{\tilde{\Gamma}_j(t') \, \tilde{\Gamma}_i(t)} \right\} dt'. \label{eq2.33} \end{split} \ee
+%
+The Markov approximation is easily grasped from \eqref{eq2.33} if we conclude that the reservoir operators $\tilde{\Gamma}_i(t)$ and $\tilde{\Gamma}_j(t')$ are delta-correlated,
+%
+\be \evalue{\tilde{\Gamma}_i(t) \, \tilde{\Gamma}_j(t')} \simeq \delta(t - t'), \label{eq2.34} \ee
+%
+as this is only possible at $t = t'$, which matches the condition of \eqref{eq2.25}. The Markov approximation is also only valid when correlation times are small relative to the system evolution timescale. This explains why modeling the reservoir as an enormous set of thermal modes works so well; a reservoir of lasers would be highly undesirable as correlation times would grow very large.
+
+Up to this point, we have made no specification as to the system operators. Now we choose to consider a single damped harmonic oscillator for our system, and continue to model the reservoir as a large ensemble of thermal modes. The Hamiltonians of \eqref{eq2.1} and the reservoir density operator are
+%
+\begin{subequations} \begin{align}
+H_S &= \hbar\omega_0 \, \adag a, \label{eq2.35a} \\
+H_R &= \sum_j \hbar\omega_j \, r^{\dag}_j r_j, \label{eq2.35b} \\
+H_{SR} &= \hbar \sum_j \left( \kappa^{\ast}_j \, a r^{\dag}_j + \kappa_j \, \adag r_j \right) = \hbar \left( a \Gamma^{\dag} + \adag \Gamma \right), \label{eq2.35c} \\
+R_0 &= \prod_j \exp \left( -\frac{\hbar\omega_j}{k_B T} \, r^{\dag}_j r_j \right) \left[ 1 - \exp \left( -\frac{\hbar\omega_j}{k_B T} \right) \right], \label{eq2.35d} \end{align} \end{subequations}
+%
+where the index $j$ denotes a single mode of the reservoir and we have defined a total reservoir operator $\Gamma = \sum_j \kappa_j r_j$. Matching the corresponding operators from \eqref{eq2.33} to those of \eqref{eq2.35a}-\eqref{eq2.35c} we find
+%
+\be s_1 = a, \quad \tilde{s}_1 = a \, e^{-i\omega_0 t}, \quad s_2 = \adag, \quad \tilde{s}_2 = \adag \, e^{i\omega_0 t}, \quad \Gamma_1 = \Gamma^{\dag}, \quad \Gamma_2 = \Gamma. \label{eq2.36} \ee
+%
+Having defined these correspondences, we are able to evaluate the two-time correlation functions in \eqref{eq2.33} for all combinations of $i$, $j$ = 1, 2. In no particular order these are
+%
+\begin{subequations} \begin{align}
+\evalue{\tilde{\Gamma}^{\dag}(t) \, \tilde{\Gamma}^{\dag}(t')} &= 0, \label{eq2.37a} \\
+\evalue{\tilde{\Gamma}(t) \, \tilde{\Gamma}(t')} &= 0, \label{eq2.37b} \\
+\evalue{\tilde{\Gamma}^{\dag}(t) \, \tilde{\Gamma}(t')} &= \evalue{\tilde{\Gamma}^{\dag}(t) \, \tilde{\Gamma}(t - \tau)} \nonumber \\
+&= \int_0^{\infty} e^{i\omega\tau} \, g(\omega) \modsq{\kappa(\omega)} \evalue{r^{\dag}_j r_j} d\omega \nonumber \\
+&= \int_0^{\infty} e^{i\omega\tau} \, g(\omega) \modsq{\kappa(\omega)} \bar{n}(\omega, \, T) \, d\omega, \label{eq2.37c} \\
+\evalue{\tilde{\Gamma}(t) \, \tilde{\Gamma}^{\dag}(t - \tau)} &= \int_0^{\infty} e^{-i\omega\tau} \, g(\omega) \modsq{\kappa(\omega)} \left[ \bar{n}(\omega, \, T) + 1 \right] d\omega. \label{eq2.37d} \end{align} \end{subequations}
+%
+Considering first \eqref{eq2.37a}, we note this correlation may be approximated by $\sum_j \langle r^{\dag}_j r^{\dag}_j \rangle$ or $\sum_{i,j} \langle r^{\dag}_i r^{\dag}_j \rangle$, which can then be factorized as $\sum_{i,j} \langle r^{\dag}_i \rangle \, \langle r^{\dag}_j \rangle$. Both of these expectation values will vanish due to the thermal fluctuations of the reservoir; an analogous argument can be made to justify \eqref{eq2.37b}. Next we see in \eqref{eq2.37c} a new time variable $\tau$ defined by $t' \equiv t - \tau$. The exponential term arises from the product $e^{-i\omega_j t} \, e^{i\omega_j (t - \tau)}$, and the Hermitian conjugate appears in \eqref{eq2.37d}. The function $g(\omega)$ denotes the density of states required to convert from a sum to an integral over frequencies, while $\modsq{\kappa(\omega)}$ indicates a Lorentzian linewidth of the mode. Finally, $\langle r^{\dag}_j r_j \rangle = \bar{n}(\omega, \, T)$ is the frequency- and temperature-dependent mean photon number. This is slightly modified in \eqref{eq2.37d} due to the commutation relation
+%
+\[ \evalue{r_j r^{\dag}_j} = \evalue{r^{\dag}_j r_j + \comm{r_j}{r^{\dag}_j}} = \evalue{r^{\dag}_j r_j} + 1. \]
+%
+Having specified the system and reservoir operators and evaluated the possible correlation functions, we substitute the operators of \eqref{eq2.36} into \eqref{eq2.33} to find
+%
+\be \begin{split} \dot{\tilde{\rho}}(t) &= -\int_0^t \left\{ \left[ a \, e^{-i\omega_0 t} \, \adag \, e^{i\omega_0 t'} \, \tilde{\rho}(t') - \adag \, e^{i\omega_0 t'} \, \tilde{\rho}(t') \, a \, e^{-i\omega_0 t} \right] \evalue{\tilde{\Gamma}^{\dag}(t) \, \tilde{\Gamma}(t')} \right. \\
+&\qquad + \left[ \tilde{\rho}(t') \, \adag \, e^{i\omega_0 t'} \, a \, e^{-i\omega_0 t} - a \, e^{-i\omega_0 t} \, \tilde{\rho}(t') \, \adag \, e^{i\omega_0 t'} \right] \evalue{\tilde{\Gamma}(t') \, \tilde{\Gamma}^{\dag}(t)} \\
+&\qquad + \left[ \adag \, e^{i\omega_0 t} \, a \, e^{-i\omega_0 t'} \, \tilde{\rho}(t') - a \, e^{-i\omega_0 t'} \, \tilde{\rho}(t') \, \adag \, e^{i\omega_0 t} \right] \evalue{\tilde{\Gamma}(t) \, \tilde{\Gamma}^{\dag}(t')} \\
+&\qquad + \left. \left[ \tilde{\rho}(t') \, a \, e^{-i\omega_0 t'} \, \adag \, e^{i\omega_0 t} - \adag \, e^{i\omega_0 t} \, \tilde{\rho}(t') \, a \, e^{-i\omega_0 t'} \right] \evalue{\tilde{\Gamma}^{\dag}(t') \, \tilde{\Gamma}(t)} \right\} dt'. \label{eq2.38} \end{split} \ee
+%
+In order to simplify \eqref{eq2.38}, we use the definition $\tau = t - t'$ to determine the differential $d\tau = -dt'$; because this will cause both a sign cancellation and a reversal of the integral limits, we can leave the minus sign in place as well as the limits from $0 \to t$. We also employ the Markov approximation, letting $\tilde{\rho}(t') = \tilde{\rho}(t - \tau) \to \tilde{\rho}(t)$. This simplifies \eqref{eq2.38} to
+%
+\be \begin{split} \dot{\tilde{\rho}}(t) &= -\left[ a \, \adag \, \tilde{\rho}(t) - \adag \, \tilde{\rho}(t) \, a \right] \int_0^t e^{-i\omega_0 \tau} \evalue{\tilde{\Gamma}^{\dag}(t) \, \tilde{\Gamma}(t - \tau)} d\tau + \text{H.c.} \\
+&\qquad -\left[ \adag \, a \, \tilde{\rho}(t) - a \, \tilde{\rho}(t) \, \adag \right] \int_0^t e^{i\omega_0 \tau} \evalue{\tilde{\Gamma}(t) \, \tilde{\Gamma}^{\dag}(t - \tau)} d\tau + \text{H.c.}, \label{eq2.39} \end{split} \ee
+%
+where H.c. refers to the Hermitian conjugate of the preceding term. There are now two double integrals to evaluate in \eqref{eq2.39} due to \eqref{eq2.37c} and \eqref{eq2.37d}, and we abbreviate these double integrals in the following way:
+%
+\begin{subequations} \begin{align}
+I_1 &= \int_0^t e^{-i\omega_0 \tau} \, d\tau \int_0^{\infty} e^{i\omega\tau} \, g(\omega) \modsq{\kappa(\omega)} \bar{n}(\omega, \, T) \, d\omega \nonumber \\
+&= \int_0^t d\tau \int_0^{\infty} e^{i(\omega - \omega_0)\tau} \, g(\omega) \modsq{\kappa(\omega)} \bar{n}(\omega, \, T) \, d\omega, \label{eq2.40a} \\
+I_2 &= I_1 + \int_0^t d\tau \int_0^{\infty} e^{i(\omega_0 - \omega)\tau} \, g(\omega) \modsq{\kappa(\omega)} d\omega, \label{eq2.40b} \\
+&= I_1 + I_3. \label{eq2.40c} \end{align} \end{subequations}
+%
+Because the $d\tau$ integrals are dominated by short timescales, i.e. only small values of $t$ contribute, we can change the limits on these integrals to $0 \to \infty$. The temporal integrals then evaluate to a delta function, which allows us to evaluate the frequency integral, yielding
+%
+\be I_1 = \pi \, g(\omega_0) \modsq{\kappa(\omega_0)} \bar{n}(\omega_0, \, T) + i\Delta'. \label{eq2.41} \ee
+%
+The last term in \eqref{eq2.41} refers to the complex portion of the integral, which arises from only evaluating the integral over the limits (0, $\infty$) rather than ($-\infty$, $+\infty$). We simplify $I_1$ further by defining a new variable $\gamma = 2\pi \, g(\omega_0) \modsq{\kappa(\omega_0)}$ such that
+%
+\be I_1 = \frac{\gamma}{2} \bar{n} + i\Delta', \label{eq2.42} \ee
+%
+and similarly
+%
+\be I_3 = \pi \, g(\omega_0) \modsq{\kappa(\omega_0)} + i\Delta = \frac{\gamma}{2} + i\Delta. \label{eq2.43} \ee
+%
+Taking the sum of the results of \eqref{eq2.42} and \eqref{eq2.43} yields
+%
+\be I_2 = \frac{\gamma}{2} \left( \bar{n} + 1 \right) + i \left( \Delta' + \Delta \right). \label{eq2.44} \ee
+%
+We point out that $\Delta'$ and $\Delta$ are, physically, energy level shifts, and it is possible to choose $H_S$ with a frequency $\omega_0$ such that these shifts disappear. Making such a choice at this time and omitting the complex term, \eqref{eq2.39} simplifies to
+%
+\be \begin{split} \dot{\tilde{\rho}}(t) &= -\frac{\gamma}{2} \bar{n} \left[ a\adag \, \tilde{\rho}(t) - \adag \, \tilde{\rho}(t) \, a + \tilde{\rho}(t) \, a\adag - \adag \, \tilde{\rho}(t) \, a \right] \\
+&\qquad - \frac{\gamma}{2} \left( \bar{n} + 1 \right) \left[ \adag a \, \tilde{\rho}(t) - a \, \tilde{\rho}(t) \, \adag + \tilde{\rho}(t) \, \adag a - a \, \tilde{\rho}(t) \, \adag \right], \label{eq2.45} \end{split} \ee
+%
+or, suppressing the time dependence of the density operator,
+%
+\be \dot{\tilde{\rho}} = \frac{\gamma}{2} \bar{n} \left( 2\adag \tilde{\rho} a - a\adag \tilde{\rho} - \tilde{\rho} a\adag \right) + \frac{\gamma}{2} \left( \bar{n} + 1 \right) \left( 2 a \tilde{\rho} \adag - \adag a \tilde{\rho} - \tilde{\rho} \adag a \right). \label{eq2.46} \ee
+%
+This is the master equation in standard Lindblad form for a damped harmonic oscillator in the interaction picture. It will be abbreviated further in our consideration of cOM as we will operate in the limit $T \to 0$ such that $\bar{n} \to 0$ and
+%
+\be \dot{\tilde{\rho}} = \frac{\gamma}{2} \left( 2a \tilde{\rho} \adag - \adag a \tilde{\rho} - \tilde{\rho} \adag a \right). \label{eq2.47} \ee
+%
+We have achieved the goal of Section~2.1, and will refer to \eqref{eq2.47} in writing the full master equation of our cOM apparatus in the interaction picture later in Chapter~2.
+
+\section{Quantum Trajectories}
+In considering a cQED experiment, there are effectively an infinite number of variables to consider if we measure the inputs and outputs of the system and all possible reservoir modes. Quantum trajectory theory seeks to remedy this impasse by modeling cQED as a scattering experiment \cite{howard2}.
+%
+\begin{figure}[htb]
+\begin{center}
+\includegraphics[width=0.8\textwidth]{Figures/2Scattering}
+\caption[A schematic of a quantum optical scattering experiment]{\small{A schematic of a quantum optical scattering experiment. Different driving inputs enter the interaction region, such as a laser or other coherent electromagnetic field, while incoherent driving might represent incoming thermal photons. Coherent forward scattering could be indicative of stimulated emission, while undirected output might demonstrate spontaneous emission.}}
+\label{fig2Scattering}
+\end{center}
+\end{figure}
+%
+Rather than monitoring the infinity of variables of which the system and reservoir composite consist, quantum trajectory theory allows us to measure only the inputs and outputs of a given quantum optical experiment \cite{howard2}. We follow the approach of Carmichael in \cite{howard2}, modeling an open quantum system and monitoring some of the environment. We cast the density operator of the system as a summation,
+%
+\be \rho(t) = \sum_i P_i \, \ket{\psi_i} \bra{\psi_i}, \label{eq2.48} \ee
+%
+where $P_i$ is the probability to find the system in state $\ket{\psi_i}$. However, this is not the unique form we require, which we can justify by considering a laser emitting a perfectly coherent state such that \eqref{eq2.48} becomes
+%
+\be \rho(t) = \int P_{\alpha} \, \ket{\psi_{\alpha}} \bra{\psi_{\alpha}} \, d\alpha = \sum_n P_n \, \ket{n} \bra{n}. \label{eq2.49} \ee
+%
+We are able to decompose the density operator into either coherent states or perfectly incoherent number states; this seems contradictory but is in fact true. Mathematically, this is merely a reflection of our ability to decompose a matrix into an infinite number of different bases; the coherent and number states represent two such possible choices.
+
+However, the basis of most use in quantum trajectory theory is that of measurement records, denoted $\REC$, allowing us to restate \eqref{eq2.48} as
+%
+\be \rho(t) = \sum_{\REC} P_{\REC} \, \ket{\psi_{\REC}} \bra{\psi_{\REC}}. \label{eq2.50} \ee
+%
+The measurement record is a list of when the detector clicks for each event. In order to preserve probability, the trace over the density operator must sum to unity,
+%
+\be \sum_{\REC} P_{\REC} = 1. \label{eq2.51} \ee
+%
+In other words, the various weighting factors must sum to unity. It is important to understand that while the state vectors $\ket{\psi_{\REC}(t)}$ refer only to the system dynamics, the measurement record $\REC$ describes both the system and the reservoir. We require a density operator satisfying two conditions: (i) it must obey the master equation \eqref{eq2.46}, and (ii) yield probabilities $P_{\REC}$ that provide the correct weighting in relation to experimental results. The record must account for all observations, averages, and correlations. In order to evaluate the measurement record, we need to consider photon emissions.
+
+First, we should examine the waiting time distribution. To construct it, we build a histogram using the time durations between subsequent clicks, i.e. from the $i$th click to the $(i + 1)$-click. Second, we need to consider the second-order correlation function $g^{(2)}(\tau)$, where the normalized form is defined in \cite{howard1} as
+%
+\[ g^{(2)}(\tau) = \frac{\langle \adag(t) \, \adag(t + \tau) \, a(t + \tau) \, a(t) \rangle}{ \left[ \langle \adag a \rangle(t) \right]^2}. \] 
+%
+The latter is best illustrated by constructing a histogram of the time durations between all pairs of clicks, whether they are sequential or not, i.e. from the $i$th click to the $j$th click.
+
+To best describe the mathematical formalism of quantum trajectories, we begin by considering an Einstein stochastic process such as spontaneous emission \cite{howard2}. Stimulated emission is another such process, but does not allow for superposition, a constraint we do not wish to impose. We model spontaneous emission in the context of a two-state system with energy levels $\ket{1}$ and $\ket{2}$, defining $\gamma$ as the Einstein $A$ coefficient. Denoting the mean thermal photon number as $\bar{n}$, the respective probabilities to find the system in states $\ket{1}$ and $\ket{2}$ are $p_1$ and $p_2$, which obey the rate equations
+%
+\begin{subequations} \begin{align} 
+\dot{p}_2 &= -\gamma_{\downarrow} p_2 + \gamma_{\uparrow} p_1, \label{eq2.52a} \\
+\dot{p}_1 &= -\gamma_{\uparrow} p_1 + \gamma_{\downarrow} p_2, \label{eq2.52b} \end{align} \end{subequations}
+%
+where we have defined the transition rates
+%
+\be \gamma_{\downarrow} = \gamma \left( \bar{n} + 1 \right), \quad \gamma_{\uparrow} = \gamma \bar{n}. \label{eq2.53} \ee
+%
+One way to evaluate \eqref{eq2.52a} and \eqref{eq2.52b} is using a Monte Carlo simulation considering some time interval $t = b \, \delta t$, where $b$ is a counting variable and $\delta t$ is an infinitesimal time step. After each step, the simulation would proceed in a manner prescribed below after considering some random number $r_b$ in the range $r_b \in$ (0, 1):
+%
+\begin{subequations} \begin{align}
+&\text{If } \ket{\psi(0)} = \ket{2}, \, p_{\downarrow} = \gamma_{\downarrow} \, \delta t. \text{ If } p_{\downarrow} > r_b, \text{ then } \ket{2} \to \ket{1}, \text{ else } \ket{2} \to \ket{2}; \label{eq2.54a} \\
+&\text{If } \ket{\psi(0)} = \ket{1}, \, p_{\uparrow} = \gamma_{\uparrow} \, \delta t. \text{ If } p_{\uparrow} > r_b, \text{ then } \ket{1} \to \ket{2}, \text{ else } \ket{1} \to \ket{1}. \label{eq2.54b} \end{align} \end{subequations}
+%
+A sampling of the overall measurement record can then be written as
+%
+\[ \REC = \left\{ \begin{matrix} \cdots \\ \cdots \end{matrix}, \ \es, \ \begin{matrix} \gamma_{\uparrow} \\ T_{k-1} \end{matrix}, \ \es, \ \begin{matrix} \gamma_{\downarrow} \\ T_k \end{matrix}, \ \es, \ \begin{matrix} \gamma_{\uparrow} \\ T_{k+1} \end{matrix}, \ \es, \ \begin{matrix} \cdots \\ \cdots \end{matrix} \right. , \]
+%
+where $\es$ indicates an interval without photon detection, the $\gamma$'s mark the direction of the jump, and the $T$'s denote the time at which the jump occurred. This record consists of alternating raising and lowering jumps separated by intervals of non-detection. The density operator of \eqref{eq2.48} may now be written for our two-state system as
+%
+\be \rho(t) = p_1(t) \, \ket{1} \bra{1} + p_2(t) \, \ket{2} \bra{2}. \label{eq2.55} \ee
+%
+However, these are unconditional states and probabilities, making no reference to the measurement record; note that $p_1(t)$ and $p_2(t)$ obey the rate equations \eqref{eq2.52a} and \eqref{eq2.52b}. We want to connect \eqref{eq2.50} and \eqref{eq2.55} using the limiting case of $\bar{n} = 0$.
+
+\subsection{Trajectories of a Known Initial State}
+We first determine the conditional evolution of the system under a known initial state. There must then be three types of measurement records:
+%
+\be \begin{split} \recA &= \left\{ \begin{matrix} \ket{2} \\ 0 \end{matrix}, \ \es_t \right\}, \\ 
+\recB &= \left\{ \begin{matrix} \ket{1} \\ 0 \end{matrix}, \ \es_t \right\}, \\ 
+\recCTp &= \left\{ \begin{matrix} \ket{2} \\ 0 \end{matrix}, \ \es, \ \begin{matrix} \gamma \\ T' \end{matrix}, \ \es_t \right\}, \quad t' \leq T' < t' + dt. \label{eq2.56} \end{split} \ee
+%
+In record $\recA$, the system begins in state $\ket{2}$, no photons are detected out to time $t$, and the system remains in state $\ket{2}$; record $\recB$ is similar except the system begins and ends in state $\ket{1}$. For record $\recCTp$, the system begins in state $\ket{2}$, there is an interval of no photon detection, and then at time $T'$ there is a detector click and the system returns to state $\ket{1}$. It is now possible to write the unconditional state probabilities in terms of the three record types from \eqref{eq2.56}:
+%
+\begin{subequations} \begin{align} p_2(t) &= P(\recA) \, p_{2\vert\recA}(t) + P(\recB) \, p_{2\vert\recB}(t) + \int_0^t P(\recCTp) \, p_{2\vert\recCTp}(t) \, dt', \label{eq2.57a} \\
+p_1(t) &= P(\recA) \, p_{1\vert\recA}(t) + P(\recB) \, p_{1\vert\recB}(t) + \int_0^t P(\recCTp) \, p_{1\vert\recCTp}(t) \, dt', \label{eq2.57b} \end{align} \end{subequations}
+%
+where the conditional probability $p_{i\vert\{ J \}}(t)$ indicates the probability for the system to be found in state $\ket{i}$ at time $t$ given the measurement record $\{ J \}$. Quantum trajectories prove flexible in this way as such formalism is easily extended to investigations with higher numbers of states and record types. The conditional probabilities in our case will be
+%
+\be \begin{split} &p_{2\vert\recA}(t) = 1, \quad p_{2\vert\recB}(t) = 0, \quad p_{2\vert\recCTp}(t) = 0, \\
+&p_{1\vert\recA}(t) = 0, \quad p_{1\vert\recB}(t) = 1, \quad p_{1\vert\recCTp}(t) = 1, \label{eq2.58} \end{split} \ee
+%
+while the probabilities for the three record types are
+%
+\begin{subequations} \begin{align}
+P(\recA) &= p_2(t) = p_2(0) \, e^{-\gamma t}, \label{eq2.59a} \\
+P(\recB) &= p_1(0) = 1 - p_2(0), \label{eq2.59b} \\
+P(\recCTp) &= \gamma \, p_2(0) \, e^{-\gamma t'}. \label{eq2.59c} \end{align} \end{subequations}
+%
+It is important to understand the origin of \eqref{eq2.59c} as it is a nontrivial result. First, we write according to \eqref{eq2.51} that
+%
+\be P(\recA) + P(\recB) + \int_0^t P(\recCTp) \, dt' = 1. \label{eq2.60} \ee
+%
+Differentiating the latter condition with respect to $t$ we find
+%
+\be \frac{d}{dt} \, P(\recA) + \frac{d}{dt} \, P(\recB) + P(\recCTp) = 0, \label{eq2.61} \ee
+%
+and using the relatively more intuitive results of \eqref{eq2.59a} and \eqref{eq2.59b} this simplifies as
+%
+\be P(\recCTp) = \left. P(\recCTp) \right\rvert_{t=t'} = \gamma \, e^{-\gamma t'} \, p_2(0), \label{eq2.62} \ee
+%
+where $P(\recCTp)/p_2(0)$ is found to be the waiting time distribution for a spontaneous emission event, conditioned on the system being prepared in state $\ket{2}$.
+
+We are now ready to write the density operator in the form prescribed by \eqref{eq2.50}, substituting $\ket{\psi_{\recA}}$ for state $\ket{2}$, as well as $\ket{\psi_{\recB}}$ and $\lvert \psi_{\recCTp} \rangle$ for state $\ket{1}$:
+%
+\be \rho(t) = P(\recA) \, \ket{\psi_{\recA}} \bra{\psi_{\recA}} + P(\recB) \, \ket{\psi_{\recB}} \bra{\psi_{\recB}} + \int_0^t P(\recCTp) \, \ket{\psi_{\recCTp}} \bra{\psi_{\recCTp}} \, dt', \label{eq2.63} \ee
+%
+which reveals only two classes of quantum trajectories for a known initial state: (i) those where the detector never clicks, and (ii) those where the detector clicks and a photon emission is observed. Truthfully, we could have surmised such a conclusion early on, but it is crucial we discuss the formalism in this simpler case so that we can proceed to investigate systems of unknown initial states.
+
+\subsection{Trajectories of an Unknown Initial State}
+In this more complicated case, there are only two types of measurement records,
+%
+\be \begin{split} \recD &= \left\{ \tensor[_0]{\es}{_t} \right\}, \\
+\recETp &= \left\{ \tensor[_0]{\es}{}, \ \begin{matrix} \gamma \\ T' \end{matrix}, \ \es_t \right\}, \label{eq2.64} \end{split} \ee
+%
+in contrast to the three possible record types of \eqref{eq2.56} with known initial states. The notation $\tensor[_0]{\es}{_t}$ denotes a time interval [0, $t$) without photon detection, while $\tensor[_0]{\es}{}$ indicates no other photon detections occurred from $t = 0$ until $t = T'$. The unconditional probabilities to be found in states $\ket{2}$ and $\ket{1}$ are highly similar to \eqref{eq2.57a} and \eqref{eq2.57b},
+%
+\begin{subequations} \begin{align} 
+p_2(t) &= P(\recD) \, p_{2\vert\recD}(t) + \int_0^t P(\recETp) \, p_{2\vert\recETp}(t) \, dt', \label{eq2.65a} \\
+p_1(t) &= P(\recD) \, p_{1\vert\recD}(t) + \int_0^t P(\recETp) \, p_{1\vert\recETp}(t) \, dt'. \label{eq2.65b} \end{align} \end{subequations}
+%
+The conditional probabilities for record $\recETp$ are easily written down, with $p_{2\vert\recETp}(t) = 0$ and $p_{1\vert\recETp}(t) = 1$ indicating the detection of a photon. The probabilities of the two records are also simply determined using the results of \eqref{eq2.59a}-\eqref{eq2.59c},
+%
+\begin{subequations} \begin{align}
+P(\recD) &= P(\recA) + P(\recB) = p_2(0) \, e^{-\gamma t} + p_1(0), \label{eq2.66a} \\
+P(\recETp) &= P(\recCTp) = \gamma \, e^{-\gamma t'} \, p_2(0). \label{eq2.66b} \end{align} \end{subequations}
+%
+The conditional probabilities of record $\recD$ are best determined using Bayes' theorem, which we state as
+%
+\be P(y) \, P(x\vert y) = P(x\wedge y), \label{eq2.67} \ee
+%
+where $P(x\vert y)$ is the probability of $x$ given $y$, and $P(x \wedge y)$ is the probability of $x$ and $y$. As a result, we can write
+%
+\be p_{2\wedge\recD}(t) = P(\recD) \, p_{2\vert\recD}(t), \label{eq2.68} \ee
+%
+where the system is found in state $\ket{2}$ and measurement record $\recD$. In fact, \eqref{eq2.68} is equal to the total probability to find the system in state $\ket{2}$, as
+%
+\[ p_2(t) = p_{2\vert\recD}(t) \, P(\recD) + p_{2\vert\recETp}(t) \, P(\recETp) = p_{2\vert\recD}(t) \, P(\recD), \]
+%
+due to the zero value of $p_{2\vert\recETp}(t)$. Combining \eqref{eq2.66a}, \eqref{eq2.66b}, and \eqref{eq2.68}, we can now determine
+%
+\be p_2(t) = p_{2\vert\recD}(t) \left[ p_2(0) \, e^{-\gamma t} + p_1(0) \right], \label{eq2.69} \ee
+%
+such that the normalized conditional probabilities of the two states are
+%
+\begin{subequations} \begin{align}
+p_{2\vert\recD}(t) &= \frac{p_2(0) \, e^{-\gamma t}}{p_2(0) \, e^{-\gamma t} + p_1(0)}, \label{eq2.70a} \\
+p_{1\vert\recD}(t) &= \frac{p_1(0)}{p_2(0) \, e^{-\gamma t} + p_1(0)}. \label{eq2.70b} \end{align} \end{subequations}
+%
+
+\subsection{Trajectories and the Master Equation}
+We must now make the crucial step of incorporating quantum trajectories into the master equation, thereby combining Sections 2.1 and 2.2. First, note that we may rewrite \eqref{eq2.46} as
+%
+\[ \dot{\rho} = \sL\rho, \]
+%
+where $\sL$ is a superoperator and we use the Schr\"{o}dinger picture for this part of the discussion. One could feasibly break the superoperator up into two pieces, one representing the between-jump time evolution of the system, $\sL_B$, and another representing the effect of a jump, $\sL_{\gamma}$, such that
+%
+\be \dot{\rho} = \left( \sL_B + \sL_{\gamma} \right) \rho, \label{eq2.71} \ee
+%
+where we choose the specific superoperators
+%
+\be \begin{split} \sL_B \rho &= -\frac{i\omega_0}{2} \comm{\sigma_z}{\rho} - \frac{\gamma}{2} \left( \splus\sminus \rho + \rho \splus\sminus \right), \\
+\sL_{\gamma} \rho &= \gamma \, \sminus \rho \splus. \label{eq2.72} \end{split} \ee
+%
+For $\sL_B$, the commutator term represents a standard quantum optical Hamiltonian, the $\gamma/2$ term comes from Bayes' theorem, and $\sL_{\gamma}$ causes jumps in the system. Note that the $\sigma$'s are Pauli pseudospin operators.
+
+Returning to the interaction picture, we define a new density operator $\bar{\rho}$ such that
+%
+\be \bar{\rho} \equiv e^{-\sL_B t} \rho, \label{eq2.73} \ee
+%
+whose time derivative is
+%
+\[ \dot{\bar{\rho}} = e^{-\sL_B t} \dot{\rho} - \sL_B \, e^{-\sL_B t} \rho. \]
+%
+According to the superoperator form of the master equation, this becomes
+%
+\[ \dot{\bar{\rho}} = e^{-\sL_B t} \left( \sL_B + \sL_{\gamma} \right) \rho - \sL_B \, e^{-\sL_B t} \rho, \]
+%
+and using the fact that $\sL_B$ commutes with itself and its own exponential this expression simplifies as
+%
+\[ \dot{\bar{\rho}} = e^{-\sL_B t} \, \sL_{\gamma} \rho. \]
+%
+With a clever bit of multiplication, this becomes
+%
+\[ \dot{\bar{\rho}} = e^{-\sL_B t} \, \sL_{\gamma} \, e^{\sL_B t} \, e^{-\sL_B t} \rho, \]
+%
+or finally
+%
+\be \dot{\bar{\rho}} = e^{-\sL_B t} \, \sL_{\gamma} \, e^{\sL_B t} \bar{\rho}, \label{eq2.74} \ee
+%
+which is the superoperator form of the master equation in the interaction picture. We now wish to solve for $\bar{\rho}$ and perform a change of basis back to the Schr\"{o}dinger picture and $\rho$. In order to accomplish this, we use time-dependent perturbation theory. Integrating both sides of \eqref{eq2.74} with respect to time,
+%
+\be \int_0^t \frac{d}{dt'} \bar{\rho}(t') \, dt' = \int_0^t e^{-\sL_B t'} \, \sL_{\gamma} \, e^{\sL_B t'} \bar{\rho}(t') \, dt', \label{eq2.75} \ee
+%
+or
+%
+\be \bar{\rho}(t) = \bar{\rho}(0) + \int_0^t e^{-\sL_B t'} \, \sL_{\gamma} \, e^{\sL_B t'} \bar{\rho}(t') \, dt'. \label{eq2.76} \ee
+%
+We transform back to the Schr\"{o}dinger picture by substituting \eqref{eq2.73} into \eqref{eq2.76} and finding
+%
+\be e^{-\sL_B t} \rho(t) = \rho(0) + \int_0^t e^{-\sL_B t'} \, \sL_{\gamma} \rho(t') \, dt', \label{eq2.77} \ee
+%
+or
+%
+\be \rho(t) = e^{\sL_B t} \rho(0) + \int_0^t e^{\sL_B (t - t')} \, \sL_{\gamma} \rho(t') \, dt'. \label{eq2.78} \ee
+%
+Now, we substitute $\rho(t)$ from the left-hand side into $\rho(t')$ on the right-hand side to obtain
+%
+\be \rho(t) = e^{\sL_B t} \rho(0) + \int_0^t e^{\sL_B (t - t')} \, \sL_{\gamma} \left[ e^{\sL_B t'} \rho(0) + \int_0^t e^{\sL_B (t' - t'')} \, \sL_{\gamma} \rho(t'') \, dt'' \right] dt'. \label{eq2.79} \ee
+%
+In a standard perturbation theory approach, it would be necessary to make such a substitution an infinite number of times to exactly solve for $\rho(t)$. However, a property of record $\recETp$, referring back to \eqref{eq2.64}, renders this unnecessary. The outer integral, i.e. the $dt'$ one, tracks all possible times up to $T'$ we expect to detect a photon, after which the system is in state $\ket{1}$ with certainty. This means integrating $\sL_{\gamma}$ at any time after $T'$ results in a zero value, and as such the inner, or $dt''$, integral vanishes, leaving only
+%
+\be \rho(t) = e^{\sL_B t} \rho(0) + \int_0^t e^{\sL_B (t - t')} \, \sL_{\gamma} \, e^{\sL_B t'} \rho(0) \, dt', \label{eq2.80} \ee
+%
+which can be solved analytically.
+
+We pause briefly at this point to calculate four quantities of note that will soon prove useful. Recalling that the density operator initially has the form
+%
+\[ \rho(0) = p_2(0) \, \ket{2} \bra{2} + p_1(0) \, \ket{1} \bra{1}, \] 
+%
+it is possible to show
+%
+\be \sL_B \, \ket{2} \bra{2} = -\gamma \, \ket{2} \bra{2}, \quad \sL_B \, \ket{1} \bra{1} = 0, \quad \sL_{\gamma} \, \ket{2} \bra{2} = \gamma \, \ket{1} \bra{1}, \quad \sL_{\gamma} \, \ket{1} \bra{1} = 0. \label{eq2.81} \ee
+%
+Using $\rho(0)$ and \eqref{eq2.81}, we are now capable of representing the two types of records in operator notation. For record $\recD$ we can write
+%
+\be e^{\sL_B t} \rho(0) = e^{-\gamma t} \, p_2(0) \, \ket{2} \bra{2} + p_1(0) \, \ket{1} \bra{1}; \label{eq2.82} \ee
+%
+similarly, record $\recETp$ follows from
+%
+\begin{align} e^{\sL_B (t - t')} \, \sL_{\gamma} \, e^{\sL_B t'} \rho(0) &= e^{\sL_B (t - t')} \, \sL_{\gamma} \left[ e^{-\gamma t'} \, p_2(0) \, \ket{2} \bra{2} + p_1(0) \, \ket{1} \bra{1} \right] \nonumber \\
+&= e^{\sL_B (t - t')} \, \gamma \, e^{-\gamma t'} \, p_2(0) \, \ket{1} \bra{1} \nonumber \\
+&= \gamma \, e^{-\gamma t'} \, p_2(0) \, \ket{1} \bra{1}. \label{eq2.83} \end{align}
+%
+The probabilities for the two measurement records can be calculated both by taking traces,
+%
+\be \begin{split} P(\recD) &= \tr \left[ e^{\sL_B t} \rho(0) \right], \\
+P(\recETp) &= \tr \left[ e^{\sL_B (t - t')} \, \sL_{\gamma} \, e^{\sL_B t'} \rho(0) \right], \label{eq2.84} \end{split} \ee
+%
+and using Dirac notation,
+%
+\be \begin{split} P(\recD) &= \bra{2} \, e^{\sL_B t} \rho(0) \, \ket{2} + \bra{1} \, e^{\sL_B t} \rho(0) \ket{1} = e^{-\gamma t} \, p_2(0) + p_1(0) \\
+P(\recETp) &= \bra{2} \, \bar{\sL}_{\gamma} \rho(0) \, \ket{2} + \bra{1} \, \bar{\sL}_{\gamma} \rho(0) \, \ket{1} = \gamma \, e^{-\gamma t'} \, p_2(0), \label{eq2.85} \end{split} \ee
+%
+where we have defined $\bar{\sL}_{\gamma} \equiv e^{\sL_B (t - t')} \, \sL_{\gamma} \, e^{\sL_B t'}$. The normalized, conditional density operators can be calculated by
+%
+\be \rho_{\recD}(t) = \frac{e^{\sL_B t} \rho(0)}{P(\recD)}, \quad \rho_{\recETp}(t) = \frac{\bar{\sL}_{\gamma} \rho(0)}{P(\recETp)}, \label{eq2.86} \ee
+%
+using the results of \eqref{eq2.85}.
+
+\subsection{Trajectories and Pure States}
+We now want to understand quantum trajectories in the context of coherence, and do so by considering an arbitrary initial pure state $\ket{\psi}$. Applying our between-jump superoperator from \eqref{eq2.72} yields
+%
+\begin{align} \sL_B \, \ket{\psi} \bra{\psi} &= -\frac{i\omega_0}{2} \comm{\sigma_z}{\ket{\psi} \bra{\psi}} - \frac{\gamma}{2} \left( \splus\sminus \ket{\psi} \bra{\psi} + \ket{\psi} \bra{\psi} \splus\sminus \right) \nonumber \\
+&= -\frac{i\omega_0}{2} \sigma_z \ket{\psi} \bra{\psi} + \frac{i\omega_0}{2} \ket{\psi} \bra{\psi} \sigma_z - \frac{\gamma}{2} \splus\sminus \ket{\psi} \bra{\psi} - \frac{\gamma}{2} \ket{\psi} \bra{\psi} \splus\sminus \nonumber \\
+&= -\frac{i}{\hbar} \left( \frac{\hbar\omega_0}{2} \sigma_z - i\hbar \frac{\gamma}{2} \splus\sminus \right) \ket{\psi} \bra{\psi} + \frac{i}{\hbar} \, \ket{\psi} \bra{\psi} \left( \frac{\hbar\omega_0}{2} \sigma_z + i\hbar \frac{\gamma}{2} \splus\sminus \right) \nonumber \\
+&= -\frac{i}{\hbar} H_B \ket{\psi} \bra{\psi} + \frac{i}{\hbar} \ket{\psi} \bra{\psi} H^{\dag}_B, \label{eq2.87} \end{align}
+%
+where we have defined the non-Hermitian Hamiltonian
+%
+\be H_B \equiv \frac{\hbar\omega_0}{2} \sigma_z - i\hbar \frac{\gamma}{2} \splus\sminus. \label{eq2.88} \ee
+%
+We can also apply the propagator of \eqref{eq2.82} to our pure state to obtain
+%
+\be e^{\sL_B t} \ket{\psi} \bra{\psi} = \ket{\psi_t} \bra{\psi_t}, \label{eq2.89} \ee
+%
+where we have defined a new state
+%
+\be \ket{\psi_t} \equiv e^{-iH_B t/\hbar} \, \ket{\psi}. \label{eq2.90} \ee
+%
+Note that \eqref{eq2.87} is effectively the Schr\"{o}dinger equation with a non-Hermitian Hamiltonian. More importantly, \eqref{eq2.90} reflects a pure state, indicating that if record $\recD$ begins with a pure state, it must also end with one.
+
+Next we consider the jump superoperator acting on a pure state,
+%
+\be \sL_{\gamma} \ket{\psi} \bra{\psi} = \gamma \, \sminus \ket{\psi} \bra{\psi} \splus = \ket{\psi_{\gamma}} \bra{\psi_{\gamma}}, \label{eq2.91} \ee
+%
+where we have defined a second new state
+%
+\be \ket{\psi_{\gamma}} \equiv J_{\gamma} \ket{\psi} = \sqrt{\gamma} \, \sminus \ket{\psi}. \label{eq2.92} \ee
+%
+Just as with \eqref{eq2.90}, the jump operator of \eqref{eq2.92} changes one pure state into another. In general, whether record $\recD$ or $\recETp$ occurs, starting with a pure state will always conclude with another pure state.
+
+If we substitute \eqref{eq2.89} into \eqref{eq2.84} for record $\recD$, we can use the cyclic property of the trace and the fact that the trace of a number is that same number to determine the probability of $\recD$ as
+%
+\begin{align} P(\recD) &= \tr \left[ e^{\sL_B t} \rho(0) \right] \nonumber \\
+&= \tr \left\{ \ket{\psi_t} \bra{\psi_t} \right\} \nonumber \\
+&= \tr \left\{ \braket{\psi_t}{\psi_t} \right\} \nonumber \\
+&= \braket{\psi_t}{\psi_t} \nonumber \\
+&= \braket{\bar{\psi}_{\recD}}{\bar{\psi}_{\recD}}, \label{eq2.93} \end{align}
+%
+where we have defined the unnormalized, conditional pure state
+%
+\be \ket{\bar{\psi}_{\recD}} \equiv e^{-iH_B t/\hbar} \, \ket{\psi} = e^{i\omega_0 t/2} \, c_1(0) \, \ket{1} + e^{-i\omega_0 t/2} \, e^{-\gamma t/2} \, c_2(0) \, \ket{2}. \label{eq2.94} \ee
+%
+For measurement record $\recETp$ we obtain a second unnormalized, conditional pure state
+%
+\begin{align} \ket{\bar{\psi}_{\recETp}} &= e^{iH_B (t - t')/\hbar} \, J_{\gamma} \, e^{-iH_B t'/\hbar} \, \ket{\psi(0)} \nonumber \\
+&= e^{iH_B (t - t')/\hbar} \, J_{\gamma} \left[ e^{i\omega_0 t'/2} \, c_1(0) \, \ket{1} + e^{-i\omega_0 t'/2} \, e^{-\gamma t'/2} \, c_2(0) \, \ket{2} \right] \nonumber \\
+&= e^{iH_B (t - t')/\hbar} \, \sqrt{\gamma} \, e^{-i\omega_0 t'/2} \, e^{-\gamma t'/2} \, c_2(0) \, \ket{1} \nonumber \\
+&= \sqrt{\gamma} \, e^{-i\omega_0 t'/2} \, e^{-\gamma t'/2} \, e^{i\omega_0 (t - t')/2} \, c_2(0) \, \ket{1}. \label{eq2.95} \end{align}
+%
+All the formalism of Section 2.2.4 stems from the generalized Lindblad form of the master equation analogous to that of \eqref{eq2.47},
+%
+\be \dot{\rho} = -\frac{i}{\hbar} \comm{H_0}{\rho} + \sum_i \frac{\gamma_i}{2} \left( 2 \hat{O}_i \rho \hat{O}^{\dag}_i - \hat{O}^{\dag}_i \hat{O}_i \rho - \rho \hat{O}^{\dag}_i \hat{O}_i \right), \label{eq2.96} \ee
+%
+which can be broken into two respective pieces describing the time evolution between jumps and the jumps themselves,
+%
+\begin{subequations} \begin{align}
+\sL_B \rho &= -\frac{i}{\hbar} \comm{H_0}{\rho} - \sum_i \frac{\gamma_i}{2} \left( \hat{O}^{\dag}_i \hat{O}_i \rho + \rho \hat{O}^{\dag}_i \hat{O}_i \right), \label{eq2.97a} \\
+\sL_i \rho &= \gamma_i \, \hat{O}_i \rho \hat{O}^{\dag}_i. \label{eq2.97b} \end{align} \end{subequations}
+%
+The generalized density operator for a given measurement record will take the form
+%
+\be \bar{\rho}_{\REC}(t) = \cdots \sL_{i_2} \, e^{\sL_B (t_2 - t_1)} \, \sL_{i_1} \, e^{\sL_B t_1} \, \rho(0), \label{eq2.98} \ee
+%
+with unnormalized, conditional state vector
+%
+\be \ket{\bar{\psi}_{\REC}(t)} = \cdots J_{i_2} \, e^{-iH_B (t_2 - t_1)/\hbar} \, J_{i_1} \, e^{-iH_B t_1/\hbar} \, \ket{\psi(0)}, \label{eq2.99} \ee
+%
+and probability to obtain the measurement record of
+%
+\be P(\REC) = \braket{\bar{\psi}_{\REC}(t)}{\bar{\psi}_{\REC}(t)}. \label{eq2.100} \ee
+%
+In order to numerically analyze the trajectories for an initial pure state, we begin with some state $\ket{\psi(t)}$, and after a minuscule time increment $\delta t$, either perform a jump or apply the propagator. The probability for a jump to occur is
+%
+\be P_J = \braket{\bar{\psi}_J}{\bar{\psi}_J} = \bra{\psi(t)} \, J^{\dag} J \, \ket{\psi(t)} \, \delta t, \label{eq2.101} \ee
+%
+where
+%
+\be J \, \ket{\psi(t)} = \ket{\overline{\psi_J(t + \delta t)}}, \label{eq2.102} \ee
+%
+or more explicitly
+%
+\be e^{-iH_B (\delta t - t')/\hbar} \, J_{i_1} \, e^{-iH_B t'/\hbar} \, \ket{\psi(0)} = \left[ 1 - O(\delta t) \right] J_{i_1} \left[ 1 - O(\delta t) \right] \ket{\psi(0)} = J_{i_1} \, \ket{\psi(0)}. \label{eq2.103} \ee
+%
+The terms of order $O(\delta t)$ can be ignored due to their weak dependence on $t'$, i.e. $\delta t$ represents an incredibly small time interval. After a single jump in time $\delta t$, the probability for the measurement record is
+%
+\begin{align} P(\REC) &= \int_0^{\delta t} \braket{\psi_{t'}}{\psi_{t'}} \, dt' \nonumber \\
+&= \int_0^{\delta t} \bra{\psi(0)} \, J^{\dag} J \, \ket{\psi(0)} \, dt' \nonumber \\
+&= \bra{\psi} \, J^{\dag} J \, \ket{\psi} \, \delta t \nonumber \\
+&= \gamma \, \evalue{\splus\sminus} \, \delta t, \label{eq2.104} \end{align}
+%
+where $\gamma$ must have the units of a rate. The probability of a record with no jump is easily calculated to be
+%
+\[ P(\REC) = 1 - P_J, \]
+%
+and results in only a minor correction to the initial state vector of the form
+%
+\[ \ket{\psi} \to \left( 1 - \frac{i}{\hbar} H_B \, \delta t \right) \ket{\psi}. \]
+%
+Now that we have developed the necessary formalism of quantum trajectories as per Carmichael in \cite{howard2}, we are ready to interrogate the heart of this discussion, the theory behind cavity optomechanics.
+
+\section{Cavity Optomechanics}
+The field of cavity optomechanics has arisen in recent years as a specific niche of quantum optics, which seeks to study the coupling of mechanical degrees of freedom to the modes of optical cavities, primarily via (i) radiation pressure, (ii) optical gradients, or (iii) photothermal force \cite{girvin2011}. This thesis focuses exclusively on the first mechanism. Such studies are motivated by the construction of sensitive mass and force sensors, and in quantum computation in order to supply long-range interaction between qubits \cite{girvin2011}. Experimental and theoretical investigations have also been proposed to probe the nature of quantum mechanics at larger mass scales \cite{corbitt2007, girvin2011}. In the standard cOM apparatus, the position of a mechanical oscillator modulates the frequency of an optical cavity mode \cite{girvin2011}. Such coupling is typically small relative to the mechanical frequency and cavity linewidth \cite{girvin2011}.
+
+We follow the approach of \cite{girvin2011}, using the standard model of optomechanics: the position of the mechanical oscillator is, in operator notation,
+%
+\be \hat{x} = x_{\ZPF} \left( b + \bdag \right), \label{eq2.105} \ee
+%
+where $b$ ($\bdag$) is the bosonic annihilation (creation) operator for mechanical oscillator phonon excitations and $x_{\ZPF} = \sqrt{\hbar/2M\omega_M}$ is the zero-point uncertainty in the position, which includes the oscillator mass $M$. For a single cavity mode $a$ linearly coupled to the oscillator, the Hamiltonian is
+%
+\be H_0 = \hbar\omega \, \adag a + \hbar\omega_M \, \bdag b + g_M \, \adag a \left( b + \bdag \right), \label{eq2.106} \ee
+%
+where $\omega$ is the frequency of the driving field and $\omega_M$ is the frequency of the mechanical oscillator. The optomechanical coupling $g_M = \omega' x_{\ZPF}$ is defined using the partial derivative $\omega' = \partial\omega/\partial x$, i.e. the frequency modulation due to the change in position of the oscillator.
+
+It is of note that the Hamiltonian \eqref{eq2.106} conserves photon number, i.e. it commutes with the photon number operator $\adag a$. The Hamiltonian is perhaps best conceived as a displacement in position of a harmonic oscillator of frequency $\omega_M$; the magnitude of this displacement is given by $-nx_0$, where $n$ is the photon number and $x_0 = 2x_{\ZPF}g/\omega_M$ is a single-photon displacement. Such an interpretation arises from diagonalizing the Hamiltonian in the subspace of $n$ photons.
+
+As the authors point out in \cite{girvin2011}, the optical probe spectrum of this cOM system will display  sideband peaks at integer multiples of $\omega_M$ whose widths are multiples of the mechanical linewidth, which we denote $\kappa_M$. In the temperature limit $T \to 0$, the peaks will only appear at frequencies redshifted from the driving frequency $\omega$. This occurs because photons can only create phonons, and as a result leave the cavity with an output frequency $\omega_{\text{out}} < \omega$. For temperature $T > 0$, or for stronger driving, additional sideband peaks will arise blueshifted from $\omega$, due to nonzero probability for a photon to absorb the energy of one or more phonons, leaving the cavity with frequency $\omega_{\text{out}} > \omega$.
+
+In our model of cOM, we consider a weakly-driven single-mode cavity, where the field mode is coupled to a single two-level atom via the Jaynes-Cummings coupling rate $g$ and to the mechanical oscillator with rate $g_M$. The full optomechanical Hamiltonian, including driving, both types of coupling, and dissipation through (i) spontaneous emission of the atom, (ii) loss of a photon from the cavity mode, or (iii) loss of a phonon from the oscillator, can be written as
+%
+\be \begin{split} H &= \hbar\Delta \left( \adag a + \splus\sminus \right) + \hbar\omega_M \, \bdag b + \hbar Y \left( a + \adag \right) + \hbar g \left( a\splus + \adag\sminus \right) \\ &\qquad + \hbar g_M \, \adag a \left( b + \bdag \right) - i\hbar\kappa \, \adag a - i\hbar\frac{\gamma}{2} \, \splus\sminus - i\hbar\frac{\kappa_M}{2} \, \bdag b. \label{eq2.107} \end{split} \ee
+%
+The majority of the parameters in \eqref{eq2.107} have been mentioned earlier in Section 1, but we have introduced the detuning $\Delta = \omega - \omega_0$, i.e. the frequency offset between the driving field and the resonant cavity mode and atomic transition. Our choice of interaction picture is defined by entering a frame rotating at frequency $\omega$, such that the atomic term $(\hbar\omega_0/2) \, \sigma_z$ and cavity term $\hbar\omega \, \adag a$ vanish, assuming the cavity mode and atomic transition are resonant, i.e. $\omega = \omega_0$. Note that by including damping terms the Hamiltonian has become non-Hermitian just as in \eqref{eq2.88}. 
+
+Now that we have developed the necessary theoretical tools and formalism, we are ready to tackle an investigation of the system represented by \eqref{eq2.107}. It will be possible, using the QuTiP software package \cite{qutipref}, to vary one or more parameters and consider the effects on various output such as the probe spectra and correlation functions. In the chapter that follows, we will consider two types of classical mechanical oscillators as a limiting case before commencing a full quantum treatment of the composite atom-field-oscillator system.

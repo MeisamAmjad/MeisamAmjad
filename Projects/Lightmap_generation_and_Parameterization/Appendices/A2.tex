@@ -1,0 +1,60 @@
+\chapter{Probe Spectrum Code}
+We show the code in QuTiP to generate Fig.~\ref{fig5d}.
+
+\begin{verbatim}
+import math
+import pylab as pl
+from qutip import *
+
+# system parameters
+n = 2
+m = 64
+gamma = 1
+kappa = 1
+Y = 0.01
+g = 3
+g_M = 5
+omega_M = 1
+kappa_M = 0
+ntraj = 1
+
+# initial state
+psi0 = tensor(fock(2,1), fock(n,0), fock(m,0))
+
+# operators
+sig_plus = tensor(sigmap(), qeye(n), qeye(m))
+a = tensor(qeye(2), destroy(n), qeye(m))
+b = tensor(qeye(2), qeye(n), destroy(m))
+
+# collapse operators
+collapse = [sqrt(2*kappa)*a, sqrt(gamma)*sig_plus.dag()]
+
+# expectation values
+evalue_list = [a.dag()*a, sig_plus*sig_plus.dag(), b.dag()*b]
+
+# lists of steady-state values
+adaga_list = []
+spsm_list = []
+bdagb_list = []
+
+Delta_list = linspace(-10,10,400)
+times_list = linspace(0,10,1000)
+
+# build the probe spectrum
+for Delta in Delta_list:
+    H = Delta*a.dag()*a + Delta*sig_plus*sig_plus.dag() + omega_M*b.dag()*b 
+    	+ Y*(a + a.dag()) + g*((a*sig_plus) + (a.dag()*sig_plus.dag())) 
+	+ g_M*a.dag()*a*(b + b.dag())
+    evalues = mcsolve(H, psi0, times_list, ntraj, collapse, evalue_list)
+    adaga_list.append(evalues[0][-1])
+    spsm_list.append(evalues[1][-1])
+    bdagb_list.append(evalues[2][-1])
+
+# plot the probe spectrum
+pl.plot(Delta_list, adaga_list, 'r', Delta_list, spsm_list, 'b', 
+	Delta_list, bdagb_list, 'g')
+pl.xlabel('detuning')
+pl.ylabel('steady-state values')
+pl.legend(('cavity', 'atom', 'oscillator'))
+pl.show()
+\end{verbatim}

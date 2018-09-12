@@ -1,0 +1,38 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%This is where one would tell \LaTeX{} how to format Theorems, Definitions, etc. and also %indicate the environment names. You need the amsthm package (loaded in the woosterthesis %class) in order for these commands to work.
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% an example of defining your own theoremstyle
+%\newtheoremstyle{break}% name
+%  {\topsep}%      Space above
+%  {\topsep}%      Space below
+%  {\itshape}%         Body font
+%  {}%         Indent amount (empty = no indent, \parindent = para indent)
+%  {\bfseries}% Thm head font
+%  {.}%        Punctuation after thm head
+%  {\newline}%     Space after thm head: " " = normal interword space;
+%        %       \newline = linebreak
+%  {}%         Thm head spec (can be left empty, meaning `normal')
+\newtheoremstyle{scthm}{\topsep}{\topsep}{\itshape}{}{\bfseries}{.}{ }{}
+\theoremstyle{break}
+\newtheorem{thm}{Theorem}[chapter]%number theorems within chapters 
+\newtheorem{cor}[thm]{Corollary}%by using [thm] we are numbering these environments with the theorems. 
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{prop}[thm]{Proposition}
+\theoremstyle{definition}
+\newtheorem{defn}[thm]{Definition}
+\theoremstyle{remark}
+\newtheorem{rem}[thm]{Remark}
+\renewcommand{\therem}{}
+\newtheorem{ex}[thm]{Example}
+\theoremstyle{plain}
+\newtheorem{note}[thm]{Notation}
+\renewcommand{\thenote}{}
+\newtheorem{nts}[thm]{Note to self}%use to remind yourself of things yet to do
+\renewcommand{\thents}{}
+\newtheorem{terminology}[thm]{Terminology}
+\renewcommand{\theterminology}{}

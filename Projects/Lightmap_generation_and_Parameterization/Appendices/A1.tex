@@ -1,0 +1,88 @@
+\chapter{Classical Oscillator Code}
+We show the code in QuTiP to generate Figs.~\ref{fig3Harmonic} and \ref{fig4Thermal}.
+
+\begin{verbatim}
+import math
+import pylab as pl
+from qutip import *
+
+# system parameters
+n = 2 # photon excitations
+gamma = 1
+kappa = 1
+Y = 0.01
+g = 3
+g_M = 2
+beta = 1
+beta_star = 1
+
+# initial state
+psi0 = tensor(fock(2,1), fock(n,0))
+
+# operators of interest
+sm = tensor(sigmam(), qeye(n))
+a = tensor(qeye(2), destroy(n))
+
+# collapse operators
+collapse = [sqrt(2*kappa)*a, sqrt(gamma)*sm]
+
+# expectation values
+evalue_list = [a.dag()*a, sm.dag()*sm]
+
+# timescale
+harmonic_time = linspace(0,15,7500)
+thermal_time = linspace(0,10,6000)
+
+# build the time-dependent Hamiltonian
+def H_t(t, args):
+    H0 = args[0]
+    H1 = args[1]
+    omega_M = args[2]
+
+    return H0 + H1 * sin(omega_M*t)
+
+H0 = Y*(a + a.dag()) + g*(a*sm.dag() + a.dag()*sm)
+H1 = g_M*a.dag()*a
+omega_M = 1
+
+H_args = (H0, H1, omega_M)
+
+# evaluate the expectation values
+evalues = odesolve(H_t, psi0, harmonic_time, collapse, evalue_list, H_args)
+
+# write to data file
+import csv
+filename1 = 'harmonic_oscillator.csv'
+with open(filename1, 'wb') as f:
+    writer = csv.writer(f)
+    writer.writerows(array([harmonic_time, evalues[0], evalues[1]]).transpose())
+    
+# generate a pseudorandom value for the thermal state
+xi = random.random()
+
+# define a new Hamiltonian
+H_therm = Y*(a + a.dag()) + g*(a*sm.dag() + a.dag()*sm) + xi*g_M*a.dag()*a
+
+# evaluate the expectation values a second time
+evalues_therm = odesolve(H_therm, psi0, thermal_time, collapse, evalue_list)
+
+# write to data file
+filename2 = 'thermal_oscillator.csv'
+with open(filename2, 'wb') as f:
+    writer = csv.writer(f)
+    writer.writerows(array([thermal_time, evalues_therm[0], 
+    	evalues_therm[1]]).transpose())
+
+# plot the graphs to verify
+pl.plot(harmonic_time, evalues[0], 'r', harmonic_time, evalues[1], 'b')
+pl.xlabel('gamma*t')
+pl.ylabel('expectation value')
+pl.legend(('cavity', 'atom'))
+pl.show()
+
+pl.plot(thermal_time, evalues_therm[0], 'r', thermal_time, evalues_therm[1], 'b')
+pl.xlabel('gamma*t')
+pl.ylabel('expectation value')
+pl.legend(('cavity', 'atom'))
+pl.show()
+\end{verbatim}
