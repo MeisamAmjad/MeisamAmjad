@@ -41,3 +41,7 @@ sqlite3
 .settings
 .recommenders
 
+# NetBeans
+#####################
+private.xm
+l
