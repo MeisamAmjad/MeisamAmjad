@@ -1,50 +1,169 @@
-\documentclass[12pt, oneside]{book}
+%% -------------------------------------------------------
+%% proposal.tex -- MAIN FILE (Thesis proposal)
+%% -------------------------------------------------------
 
-%\usepackage[parfill]{parskip}
+% ------------------- Set up the document ---------------------
+% Use the "Thesis" style, based on the ECS Thesis style 
+% by Steve Gunn
+\documentclass[a4paper, 11pt, oneside]{Thesis}
+% -------------------------------------------------------------
+
+% ---- Include any extra LaTeX packages and Paths required ----
+% Location of the graphics files (set up for graphics to be in PDF format)
+\graphicspath{Figures/}
+% Adding packages
 \usepackage{acronym, graphicx, placeins, subfig, color, tabu, todonotes, subcaption, amssymb, amsmath, amscd, fullpage, epstopdf, appendix, hyperref, setspace, tensor, url, verbatim}
+\usepackage[square, numbers, comma, sort&compress]{}
 \usepackage[inline]{enumitem}
-%\numberwithin{equation}{section}
-
+% Colours hyperlinks 
 \hypersetup{colorlinks, citecolor = black, filecolor = black, linkcolor = black, urlcolor = black, linktocpage}
+% -------------------------------------------------------------
 
-\onehalfspacing
-
-\newcommand{\be}{\begin{equation}}
-\newcommand{\ee}{\end{equation}}
-\newcommand{\adag}{a^{\dag}}
-\newcommand{\bra}[1]{\langle #1 \vert}
-\newcommand{\ket}[1]{\vert #1\rangle}
-\newcommand{\braket}[2]{\langle #1\vert #2\rangle}
-\newcommand{\sminus}{\sigma_-}
-\newcommand{\splus}{\sigma_+}
-
-\DeclareMathOperator{\tr}{tr}
-\newcommand{\evalue}[1]{\left\langle #1 \right\rangle}
-\newcommand{\comm}[2]{\left[ #1, \, #2 \right]}
-\newcommand{\modsq}[1]{\left\lvert #1 \right\rvert^2}
-\newcommand{\REC}{\text{REC}}
-\newcommand{\es}{\emptyset}
-\newcommand{\recA}{\{ A \}}
-\newcommand{\recB}{\{ B \}}
-\newcommand{\recCTp}{\{ C_{T'} \}}
-\newcommand{\recD}{\{ D \}}
-\newcommand{\recETp}{\{ E_{T'} \}}
-\newcommand{\sL}{\mathcal{L}}
-\newcommand{\ZPF}{\text{ZPF}}
-\newcommand{\bdag}{b^{\dag}}
-
+% ------------------------- Document --------------------------
 \begin{document}
-\thispagestyle{empty}
-\singlespacing
+\frontmatter      % Begin Roman style (i, ii, iii, iv...) page numbering
 
-\begin{center}
-    ABSTRACT\\
-    \vspace{2.0cm}
-    Lightmap Generation and Parameterization\\
-    \vspace{1.0cm}
-    by Meisam Amjad\\
-    \vspace{1.0cm}
-\end{center}
+% ------------------- Set up the Title Page -------------------
+\title  {Lightmap Generation and Parameterization}
+\authors  {\texorpdfstring
+            {\href{https://github.com/MeisamAmjad/MeisamAmjad/tree/master/Projects/Lightmap_generation_and_Parameterization/Proposal}{Meisam Amjad}}
+            {Meisam Amjad}
+            }
+\addresses  {\groupname\\\deptname\\\univname}  % Do not change this here, instead these must be set in the "Thesis.cls" file, please look through it instead
+\date       {\today}
+\subject    {}
+\keywords   {}
+
+\maketitle
+% -------------------------------------------------------------
+
+\setstretch{1.3} 
+
+% Define the page headers using the FancyHdr package and set up for one-sided printing
+\fancyhead{}       % Clears all page headers and footers
+\rhead{\thepage}   % Sets the right side header to show the page number
+\lhead{}           % Clears the left side page header
+
+\pagestyle{fancy}  % Finally, use the "fancy" page style to implement the FancyHdr headers
+%% ----------------------------------------------------------------
+% Declaration Page required for the Thesis
+\Declaration{
+
+    \addtocontents{toc}{\vspace{1em}}  % Add a gap in the Contents, for aesthetics
+
+    I, AUTHOR NAME, declare that this thesis titled, `THESIS TITLE' and the work presented in it are my own. I confirm that:
+
+    \begin{itemize} 
+        \item[\tiny{$\blacksquare$}] This work was done wholly or mainly while in candidature for a research degree at this University.
+ 
+        \item[\tiny{$\blacksquare$}] Where any part of this thesis has previously been submitted for a degree or any other qualification at this University or any other institution, this has been clearly stated.
+ 
+        \item[\tiny{$\blacksquare$}] Where I have consulted the published work of others, this is always clearly attributed.
+ 
+        \item[\tiny{$\blacksquare$}] Where I have quoted from the work of others, the source is always given. With the exception of such quotations, this thesis is entirely my own work.
+ 
+        \item[\tiny{$\blacksquare$}] I have acknowledged all main sources of help.
+ 
+        \item[\tiny{$\blacksquare$}] Where the thesis is based on work done by myself jointly with others, I have made clear exactly what was done by others and what I have contributed myself.
+        \\
+    \end{itemize}
+ 
+    Signed:\\
+    \rule[1em]{25em}{0.5pt}  % This prints a line for the signature
+ 
+    Date:\\
+    \rule[1em]{25em}{0.5pt}  % This prints a line to write the date
+}
+\clearpage  % Declaration ended, now start a new page
+%% ----------------------------------------------------------------
+
+% The "Funny Quote Page"
+\pagestyle{empty}  % No headers or footers for the following pages
+
+\null\vfill
+% Now comes the "Funny Quote", written in italics
+\textit{``I have no doubts my life was written in C. It is very fast, hard to understand, and I can not talk about the quality of it since the creator left only the compiled version of it. \\
+Just kidding! it is obvious whoever did it loved me so much because he learned C instead of Python for that.''}
+
+\begin{flushright}
+M.A
+\end{flushright}
+
+\vfill\vfill\vfill\vfill\vfill\vfill\null
+\clearpage  % Funny Quote page ended, start a new page
+%% ----------------------------------------------------------------
+
+% The Abstract Page
+\addtotoc{Abstract}  % Add the "Abstract" page entry to the Contents
+\abstract{
+\addtocontents{toc}{\vspace{1em}}  % Add a gap in the Contents, for aesthetics
+
+The Thesis Abstract is written here (and usually kept to just this page). The page is kept centered vertically so can expand into the blank space above the title too\ldots
+
+}
+
+\clearpage  % Abstract ended, start a new page
+%% ----------------------------------------------------------------
+
+
+\pagestyle{fancy}  %The page style headers have been "empty" all this time, now use the "fancy" headers as defined before to bring them back
+
+
+%% ----------------------------------------------------------------
+\lhead{\emph{Contents}}  % Set the left side page header to "Contents"
+\tableofcontents  % Write out the Table of Contents
+
+%% ----------------------------------------------------------------
+\lhead{\emph{List of Figures}}  % Set the left side page header to "List if Figures"
+\listoffigures  % Write out the List of Figures
+
+%% ----------------------------------------------------------------
+\lhead{\emph{List of Tables}}  % Set the left side page header to "List of Tables"
+\listoftables  % Write out the List of Tables
+
+%% ----------------------------------------------------------------
+\setstretch{1.5}  % Set the line spacing to 1.5, this makes the following tables easier to read
+\clearpage  % Start a new page
+\lhead{\emph{Abbreviations}}  % Set the left side page header to "Abbreviations"
+\listofsymbols{ll}  % Include a list of Abbreviations (a table of two columns)
+{
+% \textbf{Acronym} & \textbf{W}hat (it) \textbf{S}tands \textbf{F}or \\
+\textbf{LAH} & \textbf{L}ist \textbf{A}bbreviations \textbf{H}ere \\
+
+}
+
+%% ----------------------------------------------------------------
+\clearpage  % Start a new page
+\lhead{\emph{Physical Constants}}  % Set the left side page header to "Physical Constants"
+\listofconstants{lrcl}  % Include a list of Physical Constants (a four column table)
+{
+% Constant Name & Symbol & = & Constant Value (with units) \\
+Speed of Light & $c$ & $=$ & $2.997\ 924\ 58\times10^{8}\ \mbox{ms}^{-\mbox{s}}$ (exact)\\
+
+}
+%% ----------------------------------------------------------------
+
+\clearpage  %Start a new page
+\lhead{\emph{Symbols}}  % Set the left side page header to "Symbols"
+\listofnomenclature{lll}  % Include a list of Symbols (a three column table)
+{
+% symbol & name & unit \\
+$a$ & distance & m \\
+$P$ & power & W (Js$^{-1}$) \\
+& & \\ % Gap to separate the Roman symbols from the Greek
+$\omega$ & angular frequency & rads$^{-1}$ \\
+}
+%% ----------------------------------------------------------------
+% End of the pre-able, contents and lists of things
+% Begin the Dedication page
+
+\setstretch{1.3}  % Return the line spacing back to 1.3
+
+\pagestyle{empty}  % Page style needs to be empty for this page
+\dedicatory{For/Dedicated to/To my\ldots}
+
+\addtocontents{toc}{\vspace{2em}}  % Add a gap in the Contents, for aesthetics
+%% ----------------------------------------------------------------
 
 \noindent Work to date in cavity optomechanics has focused primarily on the coupling between the cavity field and the mechanical oscillator. We investigate a weakly driven, damped optomechanical cavity containing a two-level atom with an oscillating end mirror or an intracavity dielectric membrane. We carry out numerical simulations of the system using the framework of quantum trajectories, implemented with the Quantum Toolbox in Python (QuTiP). We calculate the cavity probe spectrum and various second-order correlations, finding they are modified by the coupling between the cavity field and the mechanical oscillator.
 
@@ -62,32 +181,32 @@ PROBE SPECTRA AND PHOTON STATISTICS IN A \\ WEAKLY-DRIVEN CAVITY OPTOMECHANICAL 
 
 \vspace{1.5cm}
 
-A Thesis \\
+A Proposal Thesis \\
 
 \vspace{0.5cm}
 
 Submitted to the \\
-Faculty of Miami University \\
+Faculty of \univname \\
 in partial fulfillment of \\
 the requirements for the degree of \\
 Master of Science \\
-Department of Physics \\
+\deptname \\
 by \\
-Andrew Jacobs \\
-Miami University \\
+\author{} \\
+\univname \\
 Oxford, Ohio \\
-2012
+2018
 
 \vspace{1.5cm}
 
 \emph{Advisor}: \rule[-0.1cm]{8cm}{0.01cm} \\
-(James Clemens) \\
+(John Femiani) \\
 \vspace{1.5cm}
 \emph{Reader}: \rule[-0.1cm]{8cm}{0.01cm} \\
-(Perry Rice) \\
+(Eric Bachmann) \\
 \vspace{1.5cm}
 \emph{Reader}: \rule[-0.1cm]{8cm}{0.01cm} \\
-(Samir Bali) \\
+(aaaaaaa) \\
 \end{center}
 \end{titlepage}
 
@@ -104,7 +223,7 @@ Oxford, Ohio \\
 \fi
 
 \setcounter{page}{2}
-\tableofcontents
+%\tableofcontents
 \setcounter{tocdepth}{2}
 \listoffigures
 
